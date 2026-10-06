@@ -33,12 +33,11 @@ int main()
         float dt = Engine::Instance().GetTime().GetDeltaTime();
 
         // RENDER
-        Engine::Instance().GetRenderer().SetColor(0.0f, 0.0f, 0.0f);
-        Engine::Instance().GetRenderer().Clear();
+		Engine::Instance().GetRenderer().BeginFrame();
 
         Engine::Instance().GetPS().Draw(Engine::Instance().GetRenderer());
 
-        Engine::Instance().GetRenderer().Present();
+        Engine::Instance().GetRenderer().EndFrame();
     }
 
     // SHUTDOWN
