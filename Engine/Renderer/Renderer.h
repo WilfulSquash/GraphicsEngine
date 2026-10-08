@@ -36,8 +36,16 @@ namespace nu
 		void SetCamera(const Vector2& camera) { m_camera = camera; }
 		void EnableCamera(bool enable = true) { m_cameraEnabled = enable; }
 
+		SDL_GPUDevice* GetGPUDevice() const { return m_gpuDevice; }
+		SDL_Window* GetWindow() const { return m_window; }
+
+		void SetPipeline(const class Pipeline& pipeline);
+		void SetVertexBuffer(const class VertexBuffer& vertexBuffer);
+		void Draw(uint32_t vertexCount);
+
 		friend class TextRenderer;
 		friend class Texture;
+		friend class Shader;
 
 	private:
 		SDL_Window* m_window = nullptr;
