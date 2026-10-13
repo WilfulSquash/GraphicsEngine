@@ -6,6 +6,9 @@
 
 #include "Resources/ResourceManager.h"
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 using namespace nu;
 namespace nu {
     struct Color4 {
@@ -17,6 +20,13 @@ struct Vertex{
     Vector3 position;
     Color4 color;
 };
+
+struct vertexUniform
+{
+    glm::mat4 model;
+};
+
+vertexUniform uniform;
 
 std::vector<Vertex> vertices = {
     Vertex{ Vector3{-1.0f, -1.0f, 0.0f}, Color4{1, 0, 0, 1}}, // Bottom-Left
@@ -78,17 +88,30 @@ int main()
         // ENGINE
         Engine::Instance().Update();
         float dt = Engine::Instance().GetTime().GetDeltaTime();
+        float time = Engine::Instance().GetTime().GetTime();
 
-        scale = abs(sin(Engine::Instance().GetTime().GetTime()));
 		color.r = abs(sin(Engine::Instance().GetTime().GetTime())) * 0.5f + 0.5f;
+
+        //uniform.model = glm::mat4(1.0f);
+
+		auto mxt = glm::translate(glm::mat4(1.0f), glm::vec3(-0.5f, 0.0f, 0.0f));
+		auto mxr = glm::rotate(glm::mat4(1.0f), time * 3, glm::vec3(0.0f, 0.0f, 1.0f));
+		auto mxs = glm::scale(glm::mat4(1.0f), glm::vec3(0.5f, 0.5f, 0.5f));
+
+		uniform.model = mxt * mxr * mxs;
+
+        //uniform.model = glm::translate(uniform.model, glm::vec3(0.5f, 0.0f, 0.0f));
+        //uniform.model = glm::rotate(uniform.model, time * 3, glm::vec3(0.0f, 0.0f, 1.0f));
+        //uniform.model = glm::scale(uniform.model, glm::vec3(0.5f, 0.5f, 0.5f));
 
         // RENDER
         Engine::Instance().GetRenderer().BeginFrame();
 
         Engine::Instance().GetRenderer().SetPipeline(*pipeline);
         Engine::Instance().GetRenderer().SetVertexBuffer(*vb);
-		Engine::Instance().GetRenderer().SetVertexUniform(0, &scale, sizeof(scale));
+        Engine::Instance().GetRenderer().SetVertexUniform(0, &uniform, sizeof(uniform));
 		Engine::Instance().GetRenderer().SetFragmentUniform(0, &color, sizeof(color));
+
 
         Engine::Instance().GetRenderer().Draw(vb->GetVertexCount());
 
