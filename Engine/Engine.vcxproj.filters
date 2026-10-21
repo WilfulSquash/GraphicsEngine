@@ -31,27 +31,18 @@
     <Filter Include="Serialization">
       <UniqueIdentifier>{43a78f04-b206-4a41-bc0a-5be52233eee2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="models">
+      <UniqueIdentifier>{d6865c51-9aeb-4bd9-988b-29d56d3269b1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Components\RendererComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\SpriteRendererComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Components\ColliderComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Components\Component.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\CircleColliderComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\Physics.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\TextRendererComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Components\PhysicsComponent.h">
@@ -82,9 +73,6 @@
       <Filter>Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Mesh.h">
-      <Filter>Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\Model.h">
       <Filter>Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\ParticleSystem.h">
@@ -143,26 +131,8 @@
     <ClInclude Include="Resources\Resource.h">
       <Filter>Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Components\SpriteAnimationRendererComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\RigidBodyPhysicsComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Physics\PhysicsBody.h">
-      <Filter>Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\Box2DPhysicsComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Renderer\Tilemap.h">
       <Filter>Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\TilemapRendererComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\SpriteAnimatorRendererComponent.h">
-      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\Pipeline.h">
       <Filter>Renderer</Filter>
@@ -176,20 +146,11 @@
     <ClInclude Include="Renderer\IndexBuffer.h">
       <Filter>Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\Model.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Components\SpriteRendererComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\CircleColliderComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics\Physics.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\TextRendererComponentcpp.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="Components\PhysicsComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -200,9 +161,6 @@
       <Filter>Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Mesh.cpp">
-      <Filter>Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer\Model.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\ParticleSystem.cpp">
@@ -235,7 +193,6 @@
     <ClCompile Include="Framework\Scene.cpp">
       <Filter>Framework</Filter>
     </ClCompile>
-    <ClCompile Include="Engine.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Audio\Audio.cpp">
       <Filter>Audio</Filter>
@@ -243,26 +200,8 @@
     <ClCompile Include="Input\Input.cpp">
       <Filter>Input</Filter>
     </ClCompile>
-    <ClCompile Include="Components\SpriteAnimationRendererComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\RigidBodyPhysicsComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Physics\PhysicsBody.cpp">
-      <Filter>Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\Box2DPhysicsComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer\Tilemap.cpp">
       <Filter>Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\TilemapRendererComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Components\SpriteAnimatorRendererComponent.cpp">
-      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\Pipeline.cpp">
       <Filter>Renderer</Filter>
@@ -274,6 +213,10 @@
       <Filter>Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Renderer\IndexBuffer.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="Renderer\Model.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
   </ItemGroup>

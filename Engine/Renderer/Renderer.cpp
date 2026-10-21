@@ -149,33 +149,6 @@ namespace nu
         SDL_RenderRect(m_renderer, &rect);
     }
 
-    void Renderer::DrawModel(const Model& model, const Transform& transform) const
-    {
-        for (auto mesh : model.GetMeshes())
-        {
-            SetColor(mesh.GetColor().r, mesh.GetColor().g, mesh.GetColor().b, 1.0f);
-            auto& points = mesh.GetPoints();
-            for (int i = 0; i + 1 < points.size(); i++)
-            {
-                // local space
-                Vector2 v1 = points[i];
-                Vector2 v2 = points[i + 1];
-
-                // convert to world space
-                v1 *= transform.scale;
-                v2 *= transform.scale;
-
-                v1 = v1.Rotate(transform.rotation * DegToRad);
-                v2 = v2.Rotate(transform.rotation * DegToRad);
-
-                v1 += transform.position;
-                v2 += transform.position;
-
-                DrawLine(v1.x, v1.y, v2.x, v2.y);
-            }
-        }
-    }
-
     void Renderer::DrawTexture(const Texture& texture, float x, float y, float angle, float scale, bool flipH, const Vector2& origin) const
     {
         Vector2 size = texture.GetSize();
