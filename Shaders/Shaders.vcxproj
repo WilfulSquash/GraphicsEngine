@@ -86,6 +86,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <FxCompile Include="color.frag.hlsl" />
+    <FxCompile Include="lit.frag.hlsl" />
+    <FxCompile Include="lit.vert.hlsl" />
     <FxCompile Include="position.vert.hlsl" />
     <FxCompile Include="unlit.frag.hlsl" />
     <FxCompile Include="unlit.vert.hlsl" />

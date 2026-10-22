@@ -48,14 +48,22 @@ namespace nu
 			// controls how triangles are turned into pixels
 			.rasterizer_state = SDL_GPURasterizerState{
 				.fill_mode = SDL_GPU_FILLMODE_FILL, // todo: fill the triangles solid (SDL_GPU_FILLMODE_...)
-				.cull_mode = SDL_GPU_CULLMODE_NONE, // todo: skip drawing back-facing triangles (SDL_GPU_CULLMODE_...)
+				.cull_mode = SDL_GPU_CULLMODE_BACK, // todo: skip drawing back-facing triangles (SDL_GPU_CULLMODE_...)
 				.front_face = SDL_GPU_FRONTFACE_COUNTER_CLOCKWISE // todo: front faces have counter clockwise winding (SDL_GPU_FRONTFACE_...)
+			},
+
+			.depth_stencil_state = SDL_GPUDepthStencilState{
+				.compare_op = SDL_GPU_COMPAREOP_LESS,
+				.enable_depth_test = true,
+				.enable_depth_write = true
 			},
 
 			// the render targets this pipeline draws into, uses the color target array from above
 			.target_info = SDL_GPUGraphicsPipelineTargetInfo{
 				.color_target_descriptions = colorTargetDescriptions.data(), // todo: pointer to colorTargetDescriptions
-				.num_color_targets = static_cast<uint32_t>(colorTargetDescriptions.size()) // todo: number of color targets
+				.num_color_targets = static_cast<uint32_t>(colorTargetDescriptions.size()), // todo: number of color targets
+				.depth_stencil_format = SDL_GPU_TEXTUREFORMAT_D32_FLOAT,
+				.has_depth_stencil_target = true
 			}
 		};
 

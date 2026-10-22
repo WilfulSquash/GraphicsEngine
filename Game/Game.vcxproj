@@ -186,6 +186,9 @@
       <Project>{1dc1933f-925a-3eb9-ac2e-61b6862b1f0c}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\textures\spot_diffuse.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

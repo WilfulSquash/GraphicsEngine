@@ -7,5 +7,16 @@
     <Filter Include="Assets">
       <UniqueIdentifier>{c84ff932-e408-4bfe-8836-adcd39842a90}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\models">
+      <UniqueIdentifier>{3bd49036-5300-44b4-8530-353179e88728}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\textures">
+      <UniqueIdentifier>{a7d57b04-c84e-489e-a9b5-ed7cc6618524}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\textures\spot_diffuse.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>
