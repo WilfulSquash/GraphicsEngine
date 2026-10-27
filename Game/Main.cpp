@@ -17,6 +17,13 @@
 
 
 using namespace nu;
+
+enum class LightType : uint32_t {
+    Directional,
+    Point,
+    Spot
+};
+
 namespace nu {
     struct Color4 {
         float r, g, b, a;
@@ -27,35 +34,49 @@ struct Vertex{
     Vector3 position;
     Color4 color;
 };
-    // Add this before main() or at the top of main(), after Color4 is defined
-    nu::Color4 tint = { 1, 1, 1, 1 };
+// Add this before main() or at the top of main(), after Color4 is defined
+nu::Color4 tint = { 1, 1, 1, 1 };
     
-
 //Uniforms
 struct VertexUniform
 {
     glm::mat4 mvp;
     glm::mat4 model;
+    glm::vec3 cameraPos;
+    float padding1;
 };
+VertexUniform vertexUniform;
 
 struct LightUniform {
-    glm::vec3 lightDir;
-    float padding1;
-    glm::vec3 lightColor;
-    float lightIntensity;
-    glm::vec3 ambient;
+    glm::vec3 position;
+    LightType type;
+    glm::vec3 direction;
     float padding2;
+    glm::vec3 color;
+    float intensity;
+    glm::vec3 ambient;
+    float padding3;
 };
 
 LightUniform lightUniform{
-    .lightDir{0, -1, 0},
-    .lightColor{1, 0, 1},
-    .lightIntensity{1},
+    .position{10, 10, 10},
+    .type{LightType::Point},
+    .direction{0, -1, 0},
+    .color{1, 1, 1},
+    .intensity{1},
     .ambient{0.5f, 0.5f, 0.5f}
 };
 
-VertexUniform vertexUniform;
-glm::vec3 cameraPos{ 0, 0, 5 };
+
+struct MaterialUniform {
+    glm::vec2 tiling;
+    glm::vec2 offset;
+};
+
+MaterialUniform materialUniform{
+    .tiling{1.0f, 1.0f},
+    .offset{0.0f, 0.0f}
+};
 
 std::vector<Vertex> vertices = {
     Vertex{ Vector3{-0.5f, -0.5f, 0.0f}, Color4{1, 0, 0, 1}}, // Bottom-Left
@@ -74,11 +95,13 @@ int main()
     // INITIALIZATION
     Engine::Instance().Initialize();
 
+    vertexUniform.cameraPos = { 0, 0, 5 };
+    
     auto model = Resources().Get<Model>("models/spot.obj", Engine::Instance().GetRenderer());
     auto texture = Resources().Get<Texture>("textures/spot_diffuse.png", Engine::Instance().GetRenderer());
 
-    auto vshader = Resources().Get<nu::Shader>("shaders/lit.vert", Engine::Instance().GetRenderer(), 2);
-    auto fshader = Resources().Get<nu::Shader>("shaders/lit.frag", Engine::Instance().GetRenderer(), 1, 1);
+    auto vshader = Resources().Get<nu::Shader>("shaders/gouraud.vert", Engine::Instance().GetRenderer(), 3);
+    auto fshader = Resources().Get<nu::Shader>("shaders/gouraud.frag", Engine::Instance().GetRenderer(), 1, 1);
 
     auto pipeline = std::make_shared<Pipeline>();
 
@@ -140,14 +163,17 @@ int main()
         if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_E)) direction.z = -1;
         if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_Q)) direction.z = +1;
 
-        cameraPos += direction * 4.0f * dt;
+        //if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_1)) lightUniform.type = ;
 
+        vertexUniform.cameraPos += direction * 4.0f * dt;
+        //materialUniform.offset.x = time;
+        //materialUniform.tiling = glm::vec2{ 2.0f };
 
         //Transform
         transform.rotation.y = time * 100;
 
         //VIEW MATRIX
-		auto view = glm::lookAtRH(cameraPos, cameraPos + glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		auto view = glm::lookAtRH(vertexUniform.cameraPos, vertexUniform.cameraPos + glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
 		//PROJECTION MATRIX
 		float aspectRatio = (float)Engine::Instance().GetRenderer().GetWidth() / (float)Engine::Instance().GetRenderer().GetHeight();
@@ -162,6 +188,7 @@ int main()
         Engine::Instance().GetRenderer().SetPipeline(*pipeline);
         Engine::Instance().GetRenderer().SetVertexUniform(0, &vertexUniform, sizeof(vertexUniform));
         Engine::Instance().GetRenderer().SetVertexUniform(1, &lightUniform, sizeof(lightUniform));
+        Engine::Instance().GetRenderer().SetVertexUniform(2, &materialUniform, sizeof(materialUniform));
         Engine::Instance().GetRenderer().SetFragmentUniform(0, &tint, sizeof(tint));
         Engine::Instance().GetRenderer().SetFragmentTexture(0, *texture);
 
