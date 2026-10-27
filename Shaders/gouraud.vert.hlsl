@@ -1,8 +1,10 @@
 #include "Lighting.hlsli"
 
-cbuffer Uniforms : register(b0, space1){
+cbuffer VertexUniforms : register(b0, space1){
     float4x4 mvp;
     float4x4 model;
+    float3 cameraPos;
+    float padding1;
 };
 
 cbuffer LightUniforms : register(b1, space1){
@@ -33,6 +35,7 @@ Output main(Input input){
     output.position = mul(mvp, float4(input.position, 1.0f));
     
     float3 worldPosition = mul(model, float4(input.position, 1.0f)).xyz;
+    float3 radiance = light.lightColor * light.lightIntensity;
     
     //Diffuse
     float3 N = normalize(mul((float3x3)model, input.normal));
@@ -47,17 +50,18 @@ Output main(Input input){
     
     float NdotL = saturate(dot(N, L));
     
-    float3 diffuse = light.lightColor * light.lightIntensity * NdotL; 
+    float3 diffuse = radiance * NdotL; 
     output.diffuse = light.ambient + diffuse;
     
     //Specular
-    output.specular = 0;
-    if (NdotL > 0)
-    {
+    output.specular = float3(0, 0, 0);
+    if (NdotL > 0){
         float3 R = reflect(-L, N);
-        int materialShine = 16;
-
+        float3 V = normalize(cameraPos - worldPosition);
+        float RdotV = saturate(dot(R, V));
+        output.specular = radiance * pow(RdotV, material.shininess);
     }
+  
     
     return output;
 }

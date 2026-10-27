@@ -4,13 +4,12 @@
 #define LIGHT_POINT 1
 #define LIGHT_SPOT 2
 
-struct Material
-{
+struct Material{
     float2 tiling;
     float2 offset;
+    float shininess;
 };
-struct Light
-{
+struct Light{
     float3 position;
     uint type;
     float3 lightDir;

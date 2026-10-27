@@ -64,18 +64,20 @@ LightUniform lightUniform{
     .direction{0, -1, 0},
     .color{1, 1, 1},
     .intensity{1},
-    .ambient{0.5f, 0.5f, 0.5f}
+    .ambient{0.1f, 0.1f, 0.1f}
 };
 
 
 struct MaterialUniform {
     glm::vec2 tiling;
     glm::vec2 offset;
+    float shininess;
 };
 
 MaterialUniform materialUniform{
     .tiling{1.0f, 1.0f},
-    .offset{0.0f, 0.0f}
+    .offset{0.0f, 0.0f},
+    .shininess{64.0f}
 };
 
 std::vector<Vertex> vertices = {
@@ -87,9 +89,8 @@ std::vector<Vertex> vertices = {
 
 std::vector<uint32_t> indices = {0, 1, 2, 2, 3, 0};
 
+int main(){
 
-int main()
-{
     SetWorkingDirectory("Assets");
 
     // INITIALIZATION
@@ -163,7 +164,8 @@ int main()
         if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_E)) direction.z = -1;
         if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_Q)) direction.z = +1;
 
-        //if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_1)) lightUniform.type = ;
+        if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_1)) lightUniform.type = LightType::Directional;
+        if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_2)) lightUniform.type = LightType::Point;
 
         vertexUniform.cameraPos += direction * 4.0f * dt;
         //materialUniform.offset.x = time;

@@ -27,7 +27,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Lighting.hlsli">
+    <None Include="lighting.hlsli">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
