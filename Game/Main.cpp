@@ -34,8 +34,6 @@ struct Vertex{
     Vector3 position;
     Color4 color;
 };
-// Add this before main() or at the top of main(), after Color4 is defined
-nu::Color4 tint = { 1, 1, 1, 1 };
     
 //Uniforms
 struct VertexUniform
@@ -51,30 +49,34 @@ struct LightUniform {
     glm::vec3 position;
     LightType type;
     glm::vec3 direction;
-    float padding2;
+    float innerCutoff;
     glm::vec3 color;
     float intensity;
     glm::vec3 ambient;
-    float padding3;
+    float outerCutoff;
 };
 
 LightUniform lightUniform{
     .position{10, 10, 10},
     .type{LightType::Point},
     .direction{0, -1, 0},
+    .innerCutoff{0.3f},
     .color{1, 1, 1},
     .intensity{1},
-    .ambient{0.1f, 0.1f, 0.1f}
+    .ambient{0.1f, 0.1f, 0.1f},
+    .outerCutoff{0.6f}
 };
 
 
 struct MaterialUniform {
+    glm::vec4 color;
     glm::vec2 tiling;
     glm::vec2 offset;
     float shininess;
 };
 
 MaterialUniform materialUniform{
+    .color{1, 1, 1, 1},
     .tiling{1.0f, 1.0f},
     .offset{0.0f, 0.0f},
     .shininess{64.0f}
@@ -166,6 +168,10 @@ int main(){
 
         if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_1)) lightUniform.type = LightType::Directional;
         if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_2)) lightUniform.type = LightType::Point;
+        if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_3)) { 
+            lightUniform.type = LightType::Spot; 
+            lightUniform.position = glm::vec3{ 0, 0, 0 };
+        }
 
         vertexUniform.cameraPos += direction * 4.0f * dt;
         //materialUniform.offset.x = time;
@@ -188,10 +194,12 @@ int main(){
         Engine::Instance().GetRenderer().BeginFrame();
 
         Engine::Instance().GetRenderer().SetPipeline(*pipeline);
+
         Engine::Instance().GetRenderer().SetVertexUniform(0, &vertexUniform, sizeof(vertexUniform));
         Engine::Instance().GetRenderer().SetVertexUniform(1, &lightUniform, sizeof(lightUniform));
         Engine::Instance().GetRenderer().SetVertexUniform(2, &materialUniform, sizeof(materialUniform));
-        Engine::Instance().GetRenderer().SetFragmentUniform(0, &tint, sizeof(tint));
+
+        Engine::Instance().GetRenderer().SetFragmentUniform(0, &materialUniform, sizeof(materialUniform));
         Engine::Instance().GetRenderer().SetFragmentTexture(0, *texture);
 
         model->Draw(Engine::Instance().GetRenderer());
