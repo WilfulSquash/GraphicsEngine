@@ -187,7 +187,22 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Assets\textures\brick_diffuse.png" />
+    <Image Include="Assets\textures\brick_normal.png" />
+    <Image Include="Assets\textures\brick_specular.png" />
+    <Image Include="Assets\textures\lava_diffuse.png" />
+    <Image Include="Assets\textures\lava_emissive.png" />
+    <Image Include="Assets\textures\lava_normal.png" />
+    <Image Include="Assets\textures\ogre_diffuse.bmp" />
+    <Image Include="Assets\textures\ogre_normal.bmp" />
+    <Image Include="Assets\textures\rocks_diffuse.jpg" />
+    <Image Include="Assets\textures\rocks_normal.jpg" />
+    <Image Include="Assets\textures\space_crate_diffuse.png" />
+    <Image Include="Assets\textures\space_crate_emissive.png" />
+    <Image Include="Assets\textures\space_crate_normal.png" />
     <Image Include="Assets\textures\spot_diffuse.png" />
+    <Image Include="Assets\textures\squirrel_diffuse.png" />
+    <Image Include="Assets\textures\squirrel_normal.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

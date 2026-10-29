@@ -18,5 +18,50 @@
     <Image Include="Assets\textures\spot_diffuse.png">
       <Filter>Assets\textures</Filter>
     </Image>
+    <Image Include="Assets\textures\brick_diffuse.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="Assets\textures\brick_normal.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="Assets\textures\brick_specular.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="Assets\textures\lava_diffuse.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="Assets\textures\lava_emissive.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="Assets\textures\lava_normal.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="Assets\textures\ogre_normal.bmp">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="Assets\textures\rocks_diffuse.jpg">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="Assets\textures\rocks_normal.jpg">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="Assets\textures\space_crate_diffuse.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="Assets\textures\space_crate_emissive.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="Assets\textures\space_crate_normal.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="Assets\textures\squirrel_diffuse.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="Assets\textures\squirrel_normal.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="Assets\textures\ogre_diffuse.bmp">
+      <Filter>Assets\textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>
