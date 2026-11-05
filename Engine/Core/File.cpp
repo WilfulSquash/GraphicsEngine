@@ -146,7 +146,20 @@ namespace nu
 
 	bool ReadTextFile(const std::string& path, std::string& data)
 	{
-		return false;
+		// create input file stream
+		std::ifstream file(path);
+		// return false if file is not open
+		if (!file.is_open())
+			return false;
+
+		// use string stream to read file
+		std::stringstream ss;
+		ss << file.rdbuf();
+
+		// convert stream string to string
+		data = ss.str();
+
+		return true;
 	}
 
 	bool WriteTextFile(const std::string& path, const std::string& data, bool append)
