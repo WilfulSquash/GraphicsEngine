@@ -251,6 +251,9 @@
   <ItemGroup>
     <Image Include="..\Build\Assets\textures\spot_diffuse.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Build\Assets\scenes\scene.json" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

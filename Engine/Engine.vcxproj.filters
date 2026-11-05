@@ -43,6 +43,9 @@
     <Filter Include="Assets\textures">
       <UniqueIdentifier>{39c4218b-5652-4bad-afb7-a8789c9cafa6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\scenes">
+      <UniqueIdentifier>{f63ce95e-b937-4873-b953-155f3daae7f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Components\RendererComponent.h">
@@ -239,5 +242,10 @@
     <Image Include="..\Build\Assets\textures\spot_diffuse.png">
       <Filter>Assets\textures</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Build\Assets\scenes\scene.json">
+      <Filter>Assets\scenes</Filter>
+    </None>
   </ItemGroup>
 </Project>

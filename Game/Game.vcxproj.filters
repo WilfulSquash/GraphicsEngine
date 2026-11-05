@@ -13,9 +13,6 @@
     <Filter Include="Assets\textures">
       <UniqueIdentifier>{a7d57b04-c84e-489e-a9b5-ed7cc6618524}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets\scenes">
-      <UniqueIdentifier>{832d9997-df51-48ca-aaaf-08cc88c0ec2d}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\textures\spot_diffuse.png">
@@ -66,10 +63,5 @@
     <Image Include="Assets\textures\ogre_diffuse.bmp">
       <Filter>Assets\textures</Filter>
     </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Assets\scenes\scene.json">
-      <Filter>Assets\scenes</Filter>
-    </None>
   </ItemGroup>
 </Project>

@@ -204,9 +204,6 @@
     <Image Include="Assets\textures\squirrel_diffuse.png" />
     <Image Include="Assets\textures\squirrel_normal.png" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Assets\scenes\scene.json" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
