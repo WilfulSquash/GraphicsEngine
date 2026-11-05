@@ -43,6 +43,9 @@
     <Filter Include="Assets\textures">
       <UniqueIdentifier>{39c4218b-5652-4bad-afb7-a8789c9cafa6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\scenes">
+      <UniqueIdentifier>{f63ce95e-b937-4873-b953-155f3daae7f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Components\RendererComponent.h">
@@ -146,6 +149,21 @@
     <ClInclude Include="Renderer\Texture.h">
       <Filter>Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="Components\ModelComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\LightComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\CameraComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\MaterialComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\CameraControllerComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Components\PhysicsComponent.cpp">
@@ -204,10 +222,30 @@
     <ClCompile Include="Renderer\Texture.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="Components\ModelComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\LightComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\CameraComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\MaterialComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Components\CameraControllerComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Build\Assets\textures\spot_diffuse.png">
       <Filter>Assets\textures</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Build\Assets\scenes\scene.json">
+      <Filter>Assets\scenes</Filter>
+    </None>
   </ItemGroup>
 </Project>
