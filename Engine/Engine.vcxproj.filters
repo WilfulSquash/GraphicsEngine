@@ -164,6 +164,18 @@
     <ClInclude Include="Components\CameraControllerComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\Uniforms.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Light.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\MaterialInstance.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Material.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Components\PhysicsComponent.cpp">
@@ -236,6 +248,12 @@
     </ClCompile>
     <ClCompile Include="Components\CameraControllerComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\MaterialInstance.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Material.cpp">
+      <Filter>Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 #pragma once
+#include "Uniforms.h"
 
-#include "Math/Vector2.h"
 #include <SDL3/SDL.h>
 #include <SDL3_ttf/SDL_ttf.h>
 
@@ -29,23 +29,20 @@ namespace nu
 		int GetWidth() const { return m_width; }
 		int GetHeight() const { return m_height; }
 
-		void SetCamera(const Vector2& camera) { m_camera = camera; }
-		void EnableCamera(bool enable = true) { m_cameraEnabled = enable; }
-
 		//SDL GPU
 
 		SDL_GPUDevice* GetGPUDevice() const { return m_gpuDevice; }
 		SDL_Window* GetWindow() const { return m_window; }
 
 		void SetPipeline(const class Pipeline& pipeline);
-		void SetVertexBuffer(const class VertexBuffer& vertexBuffer);
-		void SetIndexBuffer(const class IndexBuffer& indexBuffer);
+		void SetVertexBuffer(const class VertexBuffer& vertexBuffer) const;
+		void SetIndexBuffer(const class IndexBuffer& indexBuffer) const;
 
 		void Draw(uint32_t vertexCount);
-		void DrawIndex(const class IndexBuffer& indexBuffer);
+		void DrawIndex(const class IndexBuffer& indexBuffer) const;
 
-		void SetVertexUniform(uint32_t slot, const void* data, uint32_t size);
-		void SetFragmentUniform(uint32_t slot, const void* data, uint32_t size);
+		void SetVertexUniform(UniformSlot slot, const void* data, uint32_t size) const;
+		void SetFragmentUniform(UniformSlot slot, const void* data, uint32_t size) const;
 
 		void SetFragmentTexture(uint32_t slot, const class Texture& texture);
 
@@ -64,9 +61,6 @@ namespace nu
 		SDL_GPUCommandBuffer* m_gpuCommandBuffer = nullptr;
 		SDL_GPURenderPass* m_gpuRenderPass = nullptr;
 		SDL_GPUTexture* m_depthTexture = nullptr;
-
-		bool m_cameraEnabled = true;
-		Vector2 m_camera;
 
 		int m_width = 0;
 		int m_height = 0;

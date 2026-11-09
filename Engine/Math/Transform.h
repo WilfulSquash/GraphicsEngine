@@ -7,45 +7,34 @@
 #include <glm/gtx/euler_angles.hpp>
 #include <glm/gtx/transform.hpp>
 #include <glm/gtx/norm.hpp>
+#include <glm//gtx/quaternion.hpp>
 
-namespace nu
-{
-    struct Transform
-    {
+namespace nu{
+    struct Transform{
         glm::vec3 position{ 0.0f, 0.0f, 0.0f };
-        glm::vec3 rotation{ 0.0f, 0.0f, 0.0f }; // degrees
+        glm::quat rotation{glm::identity<glm::quat>()};
         glm::vec3 scale{ 1.0f, 1.0f, 1.0f };
 
-        glm::mat4 matrix;
+        void SetRotation(const glm::vec3& euler) { rotation = glm::quat(glm::radians(euler)); }
+		void SetRotation(const glm::quat& qRotation) { rotation = glm::normalize(qRotation); }
 
-        const glm::mat4& GetMatrix() 
-        {
+        glm::mat4  GetMatrix() const{
             auto mxt = glm::translate(position);
-            auto mxr = glm::eulerAngleYXZ(glm::radians(rotation.y), glm::radians(rotation.x), glm::radians(rotation.z));
+            auto mxr = glm::toMat4(rotation);
             auto mxs = glm::scale(scale);
 
-			matrix = mxt * mxr * mxs;
-
-            return matrix;
+            return mxt * mxr * mxs;
         }
 
-        glm::vec3 Forward() const {
-            auto mxr = glm::eulerAngleYXZ(glm::radians(rotation.y), glm::radians(rotation.x), glm::radians(rotation.z));
-			return mxr * glm::vec4{ 0, 0, 1, 0 };
-        }
-        glm::vec3 Up() const {
-            auto mxr = glm::eulerAngleYXZ(glm::radians(rotation.y), glm::radians(rotation.x), glm::radians(rotation.z));
-			return mxr * glm::vec4{ 0, 1, 0, 0 };
-        }
-        glm::vec3 Right() const {
-            auto mxr = glm::eulerAngleYXZ(glm::radians(rotation.y), glm::radians(rotation.x), glm::radians(rotation.z));
-			return mxr * glm::vec4{ 1, 0, 0, 0 };
-        }
+        glm::vec3 Forward() const {return rotation * glm::vec3{ 0, 0, -1 };}
+        glm::vec3 Up() const {return rotation * glm::vec3{ 0, 1, 0 };}
+        glm::vec3 Right() const {return rotation * glm::vec3{ 1, 0, 0 };}
 
-        void Read(const json::value_t& value)
-        {
+        void Read(const json::value_t& value){
             JSON_READ(value, position);
-            JSON_READ(value, rotation);
+
+			glm::vec3 euler;
+            JSON_READ_NAME(value, "rotation", euler);
             JSON_READ(value, scale);
         }
     };
