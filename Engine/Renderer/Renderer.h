@@ -16,7 +16,7 @@ namespace nu
 		void Present() const;
 
 		bool BeginFrame();
-		bool EndFrame() const;
+		bool EndFrame();
 
 		void SetColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255) const;
 		void SetColor(float r, float g, float b, float a = 1.0f) const;
@@ -34,7 +34,7 @@ namespace nu
 		SDL_GPUDevice* GetGPUDevice() const { return m_gpuDevice; }
 		SDL_Window* GetWindow() const { return m_window; }
 
-		void SetPipeline(const class Pipeline& pipeline);
+		void SetPipeline(const class Pipeline& pipeline) const;
 		void SetVertexBuffer(const class VertexBuffer& vertexBuffer) const;
 		void SetIndexBuffer(const class IndexBuffer& indexBuffer) const;
 
@@ -45,6 +45,7 @@ namespace nu
 		void SetFragmentUniform(UniformSlot slot, const void* data, uint32_t size) const;
 
 		void SetFragmentTexture(uint32_t slot, const class Texture& texture);
+		void SetMaterial(const class MaterialInstance& materialInstance) const;
 
 		void CreateDepthBuffer();
 

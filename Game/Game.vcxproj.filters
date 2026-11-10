@@ -74,5 +74,8 @@
     <None Include="..\Build\Assets\materials\phong.material.json">
       <Filter>Assets\Materials</Filter>
     </None>
+    <None Include="..\Build\Assets\materials\squirrel.instance.json">
+      <Filter>Assets\Materials</Filter>
+    </None>
   </ItemGroup>
 </Project>

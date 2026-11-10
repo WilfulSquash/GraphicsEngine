@@ -2,6 +2,7 @@
 #include "Model.h"
 #include "Renderer.h"
 #include "Resources/ResourceManager.h"
+#include "Renderer/Texture.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -29,23 +30,27 @@ namespace nu
 
 		// todo: start processing the scene from the root node with ProcessNode(node, scene, renderer)
 		// the root node is scene->mRootNode
+		std::string directory = "";//GetParentDirectory(filename) + "/";
+		LoadMaterials(scene, directory, renderer);
+
 		ProcessNode(scene->mRootNode, scene, renderer);
 
 		return true;
 	}
 
-	void Model::Draw(const Renderer& renderer) const
+	void Model::Draw(const Renderer& renderer, const std::vector<res_t<MaterialInstance>>& overrides) const
 	{
 		for (const auto& mesh : m_meshes)
 		{
-			// todo: set the mesh vertex buffer on the renderer with renderer.SetVertexBuffer(vertexBuffer)
-			// the buffers are stored as unique_ptr, so dereference them with *
+			uint32_t slot = mesh.materialIndex;
+			const MaterialInstance& material = (slot < overrides.size() && overrides[slot]) ? 
+				*overrides[slot] : 
+				m_materials[slot];
+
+			renderer.SetMaterial(material);
+
 			renderer.SetVertexBuffer(*mesh.vertexBuffer);
-
-			// todo: set the mesh index buffer on the renderer with renderer.SetIndexBuffer(indexBuffer)
 			renderer.SetIndexBuffer(*mesh.indexBuffer);
-
-			// todo: draw the mesh with renderer.DrawIndex(indexBuffer)
 			renderer.DrawIndex(*mesh.indexBuffer);
 		}
 	}
@@ -153,6 +158,7 @@ namespace nu
 
 		// todo: add newMesh to m_meshes
 		// Mesh holds unique_ptrs so it can't be copied, use std::move(newMesh)
+		newMesh.materialIndex = mesh->mMaterialIndex;
 		m_meshes.push_back(std::move(newMesh));
 	}
 

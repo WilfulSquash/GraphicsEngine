@@ -255,9 +255,28 @@
     <ClCompile Include="Serialization\Json.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\Build\Assets\textures\brick_diffuse.png" />
+    <Image Include="..\Build\Assets\textures\brick_normal.png" />
+    <Image Include="..\Build\Assets\textures\brick_specular.png" />
+    <Image Include="..\Build\Assets\textures\default.png" />
+    <Image Include="..\Build\Assets\textures\lava_diffuse.png" />
+    <Image Include="..\Build\Assets\textures\lava_emissive.png" />
+    <Image Include="..\Build\Assets\textures\lava_normal.png" />
+    <Image Include="..\Build\Assets\textures\ogre_diffuse.bmp" />
+    <Image Include="..\Build\Assets\textures\ogre_normal.bmp" />
+    <Image Include="..\Build\Assets\textures\rocks_diffuse.jpg" />
+    <Image Include="..\Build\Assets\textures\rocks_normal.jpg" />
+    <Image Include="..\Build\Assets\textures\space_crate_diffuse.png" />
+    <Image Include="..\Build\Assets\textures\space_crate_emissive.png" />
+    <Image Include="..\Build\Assets\textures\space_crate_normal.png" />
     <Image Include="..\Build\Assets\textures\spot_diffuse.png" />
+    <Image Include="..\Build\Assets\textures\squirrel_diffuse.png" />
+    <Image Include="..\Build\Assets\textures\squirrel_normal.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Build\Assets\materials\ogre.instance.json" />
+    <None Include="..\Build\Assets\materials\phong.material.json" />
+    <None Include="..\Build\Assets\materials\squirrel.instance.json" />
     <None Include="..\Build\Assets\scenes\scene.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
