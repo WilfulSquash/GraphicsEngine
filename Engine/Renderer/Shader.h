@@ -10,12 +10,15 @@ namespace nu
 	public:
 		virtual ~Shader();
 
-		bool Load(const std::string& filename, const class Renderer& renderer, uint32_t uniformCount = 0, uint32_t samplerCount = 0);
+		bool Load(const std::string& filename, const class Renderer& renderer);
 
 		friend class Pipeline;
 
 	private:
+
 		SDL_GPUShader* m_gpuShader = nullptr;
 		SDL_GPUDevice* m_gpuDevice = nullptr;
+
 	};
+
 }
