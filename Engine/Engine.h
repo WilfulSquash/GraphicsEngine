@@ -7,6 +7,7 @@
 #include "Audio/Audio.h"
 
 #include "Core/Singleton.h"
+#include "Editor/Editor.h"
 
 namespace nu
 {
@@ -23,6 +24,8 @@ namespace nu
 		Audio& GetAudio() { return *m_audio; }
 		Time& GetTime() { return m_time; }
 		ParticleSystem& GetPS() { return *m_particleSystem; }
+		Editor& GetEditor(){ return *m_editor; }
+		
 
 	private:
 		friend class Singleton<Engine>;
@@ -33,6 +36,7 @@ namespace nu
 		std::unique_ptr<Renderer> m_renderer;
 		std::unique_ptr<Audio> m_audio;
 		std::unique_ptr<ParticleSystem> m_particleSystem;
+		std::unique_ptr<Editor > m_editor;
 
 		Time m_time;
 	};

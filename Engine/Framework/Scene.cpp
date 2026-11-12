@@ -52,27 +52,18 @@ namespace nu
 		}
 
 		LightUniform lightUniform{};
-		lightUniform.ambient = glm::vec3(0.2f, 0.2f, 0.2f);
+		lightUniform.ambient = glm::vec3(0.5f, 0.5f, 0.5f);
 
-		auto lights = GetActorsByTag("Lights");
-		for (auto light : lights)
-		{
+		auto lights = GetActorsByTag("Light");
+		for (auto light : lights){
 			auto lightComponent = light->GetComponent<LightComponent>();
-			if (lightComponent)
-			{
-				lightUniform.lights[lightUniform.count++] = lightComponent->GetLightData();
-			}
+			if (lightComponent){lightUniform.lights[lightUniform.count++] = lightComponent->GetLightData();}
 		}
 
 		renderer.SetVertexUniform(UniformSlot::Light, &lightUniform, sizeof(lightUniform));
 		renderer.SetFragmentUniform(UniformSlot::Light, &lightUniform, sizeof(lightUniform));
 
-
-		for (const auto& actor : m_actors)
-		{
-			if (actor)
-				actor->Draw(renderer);
-		}
+		for (const auto& actor : m_actors){if (actor)actor->Draw(renderer);}
 	}
 
 	void Scene::AddActor(std::unique_ptr<Actor> actor)
@@ -131,14 +122,9 @@ namespace nu
 						AddActor(std::move(actor));
 					}
 				}
-
 			}
 		}
-		else
-		{
-			return false;
-		}
-
+		else{return false;}
 		return true;
 	}
 }

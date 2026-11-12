@@ -13,8 +13,7 @@
 
 using namespace std;
 
-namespace nu
-{
+namespace nu{
     bool Renderer::Initialize(const char* name, int width, int height)
     {
         m_width = width;
@@ -75,19 +74,19 @@ namespace nu
             return false;
         }
 
+        m_swapchainTexture = nullptr;
 
-        SDL_GPUTexture* swapchainTexture = nullptr;
-        if (!SDL_WaitAndAcquireGPUSwapchainTexture(m_gpuCommandBuffer, m_window, &swapchainTexture, nullptr, nullptr))
+        if (!SDL_WaitAndAcquireGPUSwapchainTexture(m_gpuCommandBuffer, m_window, &m_swapchainTexture, nullptr, nullptr))
         {
             std::cerr << "Could not acquire swapchain texture: " << SDL_GetError() << std::endl;
             return false;
         }
 
-        if (swapchainTexture != nullptr)
+        if (m_swapchainTexture != nullptr)
         {
             // configure the color target attachments (This handles clearing the screen)
             SDL_GPUColorTargetInfo color_target_info{};
-            color_target_info.texture = swapchainTexture;
+            color_target_info.texture = m_swapchainTexture;
             color_target_info.clear_color = SDL_FColor{ 0.0f, 0.5f, 1.0f, 1.0f };
             color_target_info.load_op = SDL_GPU_LOADOP_CLEAR;
             color_target_info.store_op = SDL_GPU_STOREOP_STORE;
@@ -120,6 +119,15 @@ namespace nu
         }
 
         return true;
+    }
+
+    void Renderer::EndRenderPass()
+    {
+        if (m_gpuRenderPass)
+        {
+            SDL_EndGPURenderPass(m_gpuRenderPass);
+            m_gpuRenderPass = nullptr;
+        }
     }
 
     void Renderer::SetColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) const

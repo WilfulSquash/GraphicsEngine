@@ -45,15 +45,15 @@
       "type": "Actor",
       "tag": "Light",
       "transform": {
-        "position": [ 5, 5, 0 ]
+        "position": [ 0, 10, 0 ]
       },
       "components": [
         {
           "type": "LightComponent",
           "light_type": "point",
           "color": [ 1, 1, 1 ],
-          "intensity": 1.0,
-          "range": 40.0
+          "intensity": 5.0,
+          "range": 20.0
         }
       ]
     },
@@ -69,6 +69,38 @@
           "type": "ModelComponent",
           "model": "models/ogre.obj",
           "materials": [ "materials/ogre.instance.json" ]
+        }
+      ]
+    },
+    {
+      "name": "Ogre2",
+      "type": "Actor",
+      "tag": "Ogre2",
+      "transform": {
+        "position": [ 2, -1, 0 ],
+        "scale": [ 0.4, 0.4, 0.4 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "models/ogre.obj",
+          "materials": [ "materials/ogre.instance.json" ]
+        }
+      ]
+    },
+    {
+      "name": "Plane",
+      "type": "Actor",
+      "tag": "Plane",
+      "transform": {
+        "position": [ 0, -3, 0 ],
+        "scale": [ 0.4, 0.4, 0.4 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "models/plane.obj",
+          "materials": [ "materials/plane.instance.json" ]
         }
       ]
     }
