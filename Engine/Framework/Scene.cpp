@@ -6,6 +6,7 @@
 #include "Renderer/Light.h"
 #include "Components/CameraComponent.h"
 #include "Components/LightComponent.h"
+#include "Engine.h"
 
 namespace nu
 {
@@ -52,12 +53,15 @@ namespace nu
 		}
 
 		LightUniform lightUniform{};
-		lightUniform.ambient = glm::vec3(0.5f, 0.5f, 0.5f);
+		lightUniform.ambient = m_ambientLight;
 
 		auto lights = GetActorsByTag("Light");
 		for (auto light : lights){
+			if (!light->IsActive())continue;
+
 			auto lightComponent = light->GetComponent<LightComponent>();
-			if (lightComponent){lightUniform.lights[lightUniform.count++] = lightComponent->GetLightData();}
+			if (lightComponent && lightComponent->IsActive())
+			{lightUniform.lights[lightUniform.count++] = lightComponent->GetLightData();}
 		}
 
 		renderer.SetVertexUniform(UniformSlot::Light, &lightUniform, sizeof(lightUniform));
@@ -126,5 +130,14 @@ namespace nu
 		}
 		else{return false;}
 		return true;
+	}
+
+	void Scene::UpdateGui()
+	{
+		glm::vec3 clearColor = Engine::Instance().GetRenderer().GetClearColor();
+		ImGui::ColorEdit3("Clear Color", glm::value_ptr(clearColor));
+		Engine::Instance().GetRenderer().SetClearColor(clearColor);
+
+		ImGui::ColorEdit3("Ambient Light", glm::value_ptr(m_ambientLight));
 	}
 }

@@ -20,7 +20,7 @@ namespace nu
 		bool Initialize(Renderer& renderer);
 		void Shutdown();
 
-		void Update();
+		void Update(class Scene& scene);
 		void ProcessEvent(const SDL_Event& event);
 
 		void BeginFrame();
@@ -30,6 +30,12 @@ namespace nu
 		bool GetActive() { return m_active; }
 
 	private:
+		void UpdateHierarchy(class Scene& scene);
+		void UpdateInspector();
+		void UpdateAssets();
+
+	private:
 		bool m_active = true;
+		class Object* m_selected = nullptr;
 	};
 }

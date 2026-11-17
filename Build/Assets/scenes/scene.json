@@ -28,6 +28,7 @@
       "name": "Light1",
       "type": "Actor",
       "tag": "Light",
+      "active": true,
       "transform": {
         "rotation": [ -60, 30, 0 ]
       },
@@ -35,7 +36,7 @@
         {
           "type": "LightComponent",
           "light_type": "directional",
-          "color": [ 0.5, 0.5, 0.5 ],
+          "color": [ 0, 0, 1 ],
           "intensity": 1.0
         }
       ]
@@ -44,6 +45,7 @@
       "name": "Light2",
       "type": "Actor",
       "tag": "Light",
+      "active": true,
       "transform": {
         "position": [ 0, 10, 0 ]
       },
@@ -51,8 +53,8 @@
         {
           "type": "LightComponent",
           "light_type": "point",
-          "color": [ 1, 1, 1 ],
-          "intensity": 5.0,
+          "color": [ 1, 0, 0 ],
+          "intensity": 1.0,
           "range": 20.0
         }
       ]
@@ -61,6 +63,7 @@
       "name": "Ogre",
       "type": "Actor",
       "tag": "Ogre",
+      "active": true,
       "transform": {
         "position": [ 0, 0, 0 ]
       },
@@ -73,9 +76,10 @@
       ]
     },
     {
-      "name": "Ogre2",
+      "name": "Sphere",
       "type": "Actor",
-      "tag": "Ogre2",
+      "tag": "Sphere",
+      "active": true,
       "transform": {
         "position": [ 2, -1, 0 ],
         "scale": [ 0.4, 0.4, 0.4 ]
@@ -83,24 +87,71 @@
       "components": [
         {
           "type": "ModelComponent",
-          "model": "models/ogre.obj",
-          "materials": [ "materials/ogre.instance.json" ]
+          "model": "models/sphere.obj",
+          "materials": [ "materials/sphere.instance.json" ]
         }
       ]
     },
     {
-      "name": "Plane",
+      "name": "Helmet",
       "type": "Actor",
-      "tag": "Plane",
+      "active": true,
       "transform": {
-        "position": [ 0, -3, 0 ],
+        "position": [ 2, -1, 0 ],
+        "scale": [ 2.0, 2.0, 2.0 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "models/flight-helmet/flighthelmet.gltf"
+        }
+      ]
+    },
+    {
+      "name": "Cubone",
+      "type": "Actor",
+      "tag": "Cubone",
+      "active": true,
+      "transform": {
+        "position": [ 1, 2, 0 ],
         "scale": [ 0.4, 0.4, 0.4 ]
       },
       "components": [
         {
           "type": "ModelComponent",
-          "model": "models/plane.obj",
-          "materials": [ "materials/plane.instance.json" ]
+          "model": "models/cubone.glb"
+        }
+      ]
+    },
+    {
+      "name": "Dragon",
+      "type": "Actor",
+      "tag": "Dragon",
+      "active": true,
+      "transform": {
+        "position": [ 1, 0, 0 ],
+        "scale": [ 0.2, 0.2, 0.2 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "models/dragon.obj"
+        }
+      ]
+    },
+    {
+      "name": "Sphere2",
+      "type": "Actor",
+      "tag": "Sphere2",
+      "active": true,
+      "transform": {
+        "position": [ 0, 0, 3 ]
+      },
+      "components": [
+        {
+          "type": "ModelComponent",
+          "model": "models/sphere.obj",
+          "materials": [ "materials/ground.instance.json" ]
         }
       ]
     }
