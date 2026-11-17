@@ -25,6 +25,20 @@ namespace nu{
 		JSON_READ_NAME(value, "outer_angle", m_outerAngle);
 	}
 
+	void LightComponent::UpdateGui()
+	{
+		const char* types[] = {"Directional", "Point", "Spot"};
+		ImGui::Combo("Type", (int*)(&m_type), types, 3);
+		ImGui::ColorEdit3("Color", glm::value_ptr(m_color));
+
+		ImGui::SliderFloat("Intensity", &m_intensity, 0.0f, 10.0f);
+
+		if (m_type != LightType::Directional) {
+			ImGui::SliderFloat("Range", &m_range, 0.0f, 100.0f);
+		}
+		
+	}
+
 	LightData LightComponent::GetLightData() const
 	{
 		const Transform& transform = m_owner->GetTransform();

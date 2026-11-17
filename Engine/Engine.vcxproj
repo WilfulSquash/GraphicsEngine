@@ -327,10 +327,13 @@
     <Image Include="..\Build\Assets\textures\squirrel_normal.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Build\Assets\materials\dragon.instance.json" />
+    <None Include="..\Build\Assets\materials\ground.instance.json" />
+    <None Include="..\Build\Assets\materials\multi.material.json" />
     <None Include="..\Build\Assets\materials\ogre.instance.json" />
     <None Include="..\Build\Assets\materials\phong.material.json" />
     <None Include="..\Build\Assets\materials\plane.instance.json" />
-    <None Include="..\Build\Assets\materials\squirrel.instance.json" />
+    <None Include="..\Build\Assets\materials\sphere.instance.json" />
     <None Include="..\Build\Assets\scenes\scene.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

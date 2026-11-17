@@ -54,6 +54,8 @@ namespace nu
 		void SetMaterial(const class MaterialInstance& materialInstance) const;
 
 		void CreateDepthBuffer();
+		void SetClearColor(const glm::vec3& clearColor) { m_clearColor = clearColor; }
+		const glm::vec3& GetClearColor() const { return m_clearColor; }
 
 		friend class Texture;
 		friend class Shader;
@@ -64,6 +66,7 @@ namespace nu
 		SDL_Window* m_window = nullptr;
 		SDL_Renderer* m_renderer = nullptr;
 
+
 		SDL_GPUDevice* m_gpuDevice = nullptr;
 		SDL_GPUCommandBuffer* m_gpuCommandBuffer = nullptr;
 		SDL_GPURenderPass* m_gpuRenderPass = nullptr;
@@ -72,5 +75,7 @@ namespace nu
 
 		int m_width = 0;
 		int m_height = 0;
+
+		glm::vec3 m_clearColor{ 0.0f};
 	};
 }

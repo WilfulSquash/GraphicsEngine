@@ -34,10 +34,10 @@ namespace nu {
         m_owner->SetRotation(glm::vec3(m_pitch, m_yaw, 0.0f));
 
         glm::vec3 direction{ 0 };
-        if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_A)) direction += m_owner->GetTransform().Right();
-        if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_D)) direction -= m_owner->GetTransform().Right();
-        if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_W)) direction -= m_owner->GetTransform().Up();
-        if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_S)) direction += m_owner->GetTransform().Up();
+        if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_A)) direction -= m_owner->GetTransform().Right();
+        if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_D)) direction += m_owner->GetTransform().Right();
+        if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_W)) direction += m_owner->GetTransform().Up();
+        if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_S)) direction -= m_owner->GetTransform().Up();
         if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_E)) direction += m_owner->GetTransform().Forward();
         if (Engine::Instance().GetInput().GetKeyDown(SDL_SCANCODE_Q)) direction -= m_owner->GetTransform().Forward();;
 
@@ -51,5 +51,10 @@ namespace nu {
 
 		JSON_READ_NAME(value, "speed", m_speed);
 		JSON_READ_NAME(value, "sensitivity", m_sensitivity);
+    }
+    void CameraControllerComponent::UpdateGui()
+    {
+        ImGui::SliderFloat("Speed", &m_speed, 0.1f, 10.0f);
+        ImGui::SliderFloat("Sensitivity", &m_sensitivity, 0.1f, 10.0f);
     }
 }

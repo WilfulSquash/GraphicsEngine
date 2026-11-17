@@ -7,7 +7,6 @@ namespace nu{
 		CLASS_PROTOTYPE(CameraComponent)
 
 		void Start() override;
-
 		void Update(float dt) override;
 		void Draw(const Renderer& renderer) override;
 
@@ -15,6 +14,8 @@ namespace nu{
 
 		const glm::mat4x4& GetView() const { return m_view; }
 		const glm::mat4x4& GetProjection() const { return m_projection; }
+
+		void UpdateGui() override;
 
 	private:
 		glm::mat4x4 m_view;

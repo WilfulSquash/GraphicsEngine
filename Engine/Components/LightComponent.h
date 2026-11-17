@@ -11,6 +11,8 @@ namespace nu{
 
 		void Read(const json::value_t& value) override;
 
+		void UpdateGui() override;
+
 		LightData GetLightData() const;
 
 	private:
