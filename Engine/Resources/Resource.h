@@ -1,9 +1,10 @@
 #pragma once
+#include "Framework/Object.h"
 #include <memory>
 
 namespace nu
 {
-	class Resource
+	class Resource : public Object
 	{
 	public:
 		Resource() = default;

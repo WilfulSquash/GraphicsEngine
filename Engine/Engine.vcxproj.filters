@@ -391,5 +391,8 @@
     <None Include="..\Build\Assets\materials\ground.instance.json">
       <Filter>Assets\materials</Filter>
     </None>
+    <None Include="..\Build\Assets\materials\lava.instance.json">
+      <Filter>Assets\materials</Filter>
+    </None>
   </ItemGroup>
 </Project>

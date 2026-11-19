@@ -40,6 +40,8 @@ namespace nu
 		// binds and draws every mesh, call between BeginFrame and EndFrame with a pipeline set
 		void Draw(const class Renderer& renderer, const std::vector<res_t<MaterialInstance>>& overrides = {}) const;
 
+		void UpdateGui() override;
+
 	private:
 		void ProcessNode(aiNode* node, const aiScene* scene, const class Renderer& renderer);
 		void ProcessMesh(aiMesh* mesh, const aiScene* scene, const class Renderer& renderer);

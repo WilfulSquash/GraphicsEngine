@@ -329,6 +329,7 @@
   <ItemGroup>
     <None Include="..\Build\Assets\materials\dragon.instance.json" />
     <None Include="..\Build\Assets\materials\ground.instance.json" />
+    <None Include="..\Build\Assets\materials\lava.instance.json" />
     <None Include="..\Build\Assets\materials\multi.material.json" />
     <None Include="..\Build\Assets\materials\ogre.instance.json" />
     <None Include="..\Build\Assets\materials\phong.material.json" />
