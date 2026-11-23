@@ -5,6 +5,7 @@
 #include "Pipeline.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
+#include "MaterialInstance.h"
 
 #include "Math/Transform.h"
 #include "Math/MathUtils.h"
@@ -12,8 +13,7 @@
 
 using namespace std;
 
-namespace nu
-{
+namespace nu{
     bool Renderer::Initialize(const char* name, int width, int height)
     {
         m_width = width;
@@ -35,8 +35,8 @@ namespace nu
             return false;
         }
 
-        SDL_SetHint(SDL_HINT_GPU_DRIVER, "vulkan");
         SDL_GPUShaderFormat formats = SDL_GPU_SHADERFORMAT_SPIRV | SDL_GPU_SHADERFORMAT_DXIL;
+        SDL_SetHint(SDL_HINT_GPU_DRIVER, "vulkan");
         m_gpuDevice = SDL_CreateGPUDevice(formats, true, nullptr);
         if (!m_gpuDevice)
         {
@@ -74,20 +74,20 @@ namespace nu
             return false;
         }
 
+        m_swapchainTexture = nullptr;
 
-        SDL_GPUTexture* swapchainTexture = nullptr;
-        if (!SDL_WaitAndAcquireGPUSwapchainTexture(m_gpuCommandBuffer, m_window, &swapchainTexture, nullptr, nullptr))
+        if (!SDL_WaitAndAcquireGPUSwapchainTexture(m_gpuCommandBuffer, m_window, &m_swapchainTexture, nullptr, nullptr))
         {
             std::cerr << "Could not acquire swapchain texture: " << SDL_GetError() << std::endl;
             return false;
         }
 
-        if (swapchainTexture != nullptr)
+        if (m_swapchainTexture != nullptr)
         {
             // configure the color target attachments (This handles clearing the screen)
             SDL_GPUColorTargetInfo color_target_info{};
-            color_target_info.texture = swapchainTexture;
-            color_target_info.clear_color = SDL_FColor{ 0.0f, 0.5f, 1.0f, 1.0f };
+            color_target_info.texture = m_swapchainTexture;
+            color_target_info.clear_color = SDL_FColor{ m_clearColor.r, m_clearColor.g, m_clearColor.b, 1.0f };
             color_target_info.load_op = SDL_GPU_LOADOP_CLEAR;
             color_target_info.store_op = SDL_GPU_STOREOP_STORE;
 
@@ -106,9 +106,12 @@ namespace nu
         return true;
     }
 
-    bool Renderer::EndFrame() const
+    bool Renderer::EndFrame()
     {
+        if (m_gpuRenderPass) {
             SDL_EndGPURenderPass(m_gpuRenderPass);
+			m_gpuRenderPass = nullptr;
+        }
         if (!SDL_SubmitGPUCommandBuffer(m_gpuCommandBuffer))
         {
             std::cerr << "Could not submit command buffer: " << SDL_GetError() << std::endl;
@@ -116,6 +119,15 @@ namespace nu
         }
 
         return true;
+    }
+
+    void Renderer::EndRenderPass()
+    {
+        if (m_gpuRenderPass)
+        {
+            SDL_EndGPURenderPass(m_gpuRenderPass);
+            m_gpuRenderPass = nullptr;
+        }
     }
 
     void Renderer::SetColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) const
@@ -160,7 +172,7 @@ namespace nu
         SDL_RenderRect(m_renderer, &rect);
     }
 
-    void Renderer::SetPipeline(const Pipeline& pipeline)
+    void Renderer::SetPipeline(const Pipeline& pipeline) const
     {
         // bind the pipeline to the current render pass with SDL_BindGPUGraphicsPipeline(renderPass, gpuPipeline)
         // the pipeline sets the shaders and render settings used by the draw calls that follow
@@ -168,7 +180,7 @@ namespace nu
         SDL_BindGPUGraphicsPipeline(m_gpuRenderPass, pipeline.m_gpuPipeline);
     }
 
-    void Renderer::SetVertexBuffer(const VertexBuffer& vertexBuffer)
+    void Renderer::SetVertexBuffer(const VertexBuffer& vertexBuffer)const
     {
         // describe which buffer to bind and where to start reading from
         SDL_GPUBufferBinding binding{
@@ -186,7 +198,7 @@ namespace nu
         SDL_BindGPUVertexBuffers(m_gpuRenderPass, 0, &binding, 1);
     }
 
-    void Renderer::SetIndexBuffer(const IndexBuffer& indexBuffer)
+    void Renderer::SetIndexBuffer(const IndexBuffer& indexBuffer)const
     {
         // describe which buffer to bind and where to start reading from
         SDL_GPUBufferBinding binding{
@@ -214,17 +226,17 @@ namespace nu
         //   first instance - 0, start at the first instance
         SDL_DrawGPUPrimitives(m_gpuRenderPass, vertexCount, 1, 0, 0);
     }
-    void Renderer::DrawIndex(const IndexBuffer& indexBuffer)
+    void Renderer::DrawIndex(const IndexBuffer& indexBuffer) const
     {
 		SDL_DrawGPUIndexedPrimitives(m_gpuRenderPass, indexBuffer.GetIndexCount(), 1, 0, 0, 0);
     }
-    void Renderer::SetVertexUniform(uint32_t slot, const void* data, uint32_t size)
+    void Renderer::SetVertexUniform(UniformSlot slot, const void* data, uint32_t size)const
     {
-		SDL_PushGPUVertexUniformData(m_gpuCommandBuffer, slot, data, size);
+		SDL_PushGPUVertexUniformData(m_gpuCommandBuffer, (uint32_t)slot, data, size);
     }
-    void Renderer::SetFragmentUniform(uint32_t slot, const void* data, uint32_t size)
+    void Renderer::SetFragmentUniform(UniformSlot slot, const void* data, uint32_t size)const
     {
-        SDL_PushGPUFragmentUniformData(m_gpuCommandBuffer, slot, data, size);
+        SDL_PushGPUFragmentUniformData(m_gpuCommandBuffer, (uint32_t)slot, data, size);
     }
 
     void Renderer::SetFragmentTexture(uint32_t slot, const Texture& texture)
@@ -236,6 +248,11 @@ namespace nu
         };
 
         SDL_BindGPUFragmentSamplers(m_gpuRenderPass, slot, &binding, 1);
+    }
+    void Renderer::SetMaterial(const MaterialInstance& materialInstance) const
+    {
+		SetPipeline(materialInstance.GetMaterial().GetPipeline());
+        materialInstance.Bind(m_gpuCommandBuffer, m_gpuRenderPass);
     }
     void Renderer::CreateDepthBuffer()
     {

@@ -88,6 +88,8 @@
     <FxCompile Include="color.frag.hlsl" />
     <FxCompile Include="gouraud.frag.hlsl" />
     <FxCompile Include="gouraud.vert.hlsl" />
+    <FxCompile Include="multi.frag.hlsl" />
+    <FxCompile Include="phong-normal.frag.hlsl" />
     <FxCompile Include="phong.frag.hlsl" />
     <FxCompile Include="phong.vert.hlsl" />
     <FxCompile Include="position.vert.hlsl" />
@@ -96,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="lighting.hlsli" />
+    <None Include="uniforms.hlsli" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -7,9 +7,6 @@
     <Filter Include="Framework">
       <UniqueIdentifier>{93194266-4b14-4f4f-b4d2-1e934c006e27}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Physics">
-      <UniqueIdentifier>{2b7d0822-6a17-480d-9f61-e07f0dbaa500}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Math">
       <UniqueIdentifier>{5122510a-5b72-4777-a271-f014d10e9d48}</UniqueIdentifier>
     </Filter>
@@ -31,9 +28,6 @@
     <Filter Include="Serialization">
       <UniqueIdentifier>{43a78f04-b206-4a41-bc0a-5be52233eee2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="models">
-      <UniqueIdentifier>{d6865c51-9aeb-4bd9-988b-29d56d3269b1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Assets">
       <UniqueIdentifier>{9f3f8d05-9d7a-45ea-9c49-33f678e6d8b5}</UniqueIdentifier>
     </Filter>
@@ -45,6 +39,15 @@
     </Filter>
     <Filter Include="Assets\scenes">
       <UniqueIdentifier>{f63ce95e-b937-4873-b953-155f3daae7f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\materials">
+      <UniqueIdentifier>{029c43bc-ebf6-4d91-93d2-cc43e7ad3dfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor">
+      <UniqueIdentifier>{e28212ac-7478-4d2d-81c8-1c0b5f331dff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Editor\imgui">
+      <UniqueIdentifier>{a49bf35c-4afb-4d1f-939a-1cb57c3af87a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +167,48 @@
     <ClInclude Include="Components\CameraControllerComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer\Uniforms.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Light.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\MaterialInstance.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\Material.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\imgui\imconfig.h">
+      <Filter>Editor\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\imgui\imgui.h">
+      <Filter>Editor\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\imgui\imgui_internal.h">
+      <Filter>Editor\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\imgui\imstb_rectpack.h">
+      <Filter>Editor\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\imgui\imstb_textedit.h">
+      <Filter>Editor\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\imgui\imstb_truetype.h">
+      <Filter>Editor\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\imgui\backends\imgui_impl_sdl3.h">
+      <Filter>Editor\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\imgui\backends\imgui_impl_sdlgpu3.h">
+      <Filter>Editor\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\ThirdParty\imgui\backends\imgui_impl_sdlgpu3_shaders.h">
+      <Filter>Editor\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Editor\Editor.h">
+      <Filter>Editor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Components\PhysicsComponent.cpp">
@@ -237,15 +282,117 @@
     <ClCompile Include="Components\CameraControllerComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\MaterialInstance.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\Material.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui.cpp">
+      <Filter>Editor\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui_demo.cpp">
+      <Filter>Editor\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui_draw.cpp">
+      <Filter>Editor\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui_tables.cpp">
+      <Filter>Editor\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui_widgets.cpp">
+      <Filter>Editor\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\backends\imgui_impl_sdl3.cpp">
+      <Filter>Editor\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\backends\imgui_impl_sdlgpu3.cpp">
+      <Filter>Editor\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="Editor\Editor.cpp">
+      <Filter>Editor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Build\Assets\textures\spot_diffuse.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="..\Build\Assets\textures\brick_diffuse.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="..\Build\Assets\textures\brick_normal.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="..\Build\Assets\textures\brick_specular.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="..\Build\Assets\textures\default.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="..\Build\Assets\textures\lava_diffuse.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="..\Build\Assets\textures\lava_emissive.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="..\Build\Assets\textures\lava_normal.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="..\Build\Assets\textures\ogre_diffuse.bmp">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="..\Build\Assets\textures\ogre_normal.bmp">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="..\Build\Assets\textures\rocks_diffuse.jpg">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="..\Build\Assets\textures\rocks_normal.jpg">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="..\Build\Assets\textures\space_crate_diffuse.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="..\Build\Assets\textures\space_crate_emissive.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="..\Build\Assets\textures\space_crate_normal.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="..\Build\Assets\textures\squirrel_diffuse.png">
+      <Filter>Assets\textures</Filter>
+    </Image>
+    <Image Include="..\Build\Assets\textures\squirrel_normal.png">
       <Filter>Assets\textures</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Build\Assets\scenes\scene.json">
       <Filter>Assets\scenes</Filter>
+    </None>
+    <None Include="..\Build\Assets\materials\ogre.instance.json">
+      <Filter>Assets\materials</Filter>
+    </None>
+    <None Include="..\Build\Assets\materials\phong.material.json">
+      <Filter>Assets\materials</Filter>
+    </None>
+    <None Include="..\Build\Assets\materials\sphere.instance.json">
+      <Filter>Assets\materials</Filter>
+    </None>
+    <None Include="..\Build\Assets\materials\plane.instance.json">
+      <Filter>Assets\materials</Filter>
+    </None>
+    <None Include="..\Build\Assets\materials\dragon.instance.json">
+      <Filter>Assets\materials</Filter>
+    </None>
+    <None Include="..\Build\Assets\materials\multi.material.json">
+      <Filter>Assets\materials</Filter>
+    </None>
+    <None Include="..\Build\Assets\materials\ground.instance.json">
+      <Filter>Assets\materials</Filter>
+    </None>
+    <None Include="..\Build\Assets\materials\lava.instance.json">
+      <Filter>Assets\materials</Filter>
     </None>
   </ItemGroup>
 </Project>

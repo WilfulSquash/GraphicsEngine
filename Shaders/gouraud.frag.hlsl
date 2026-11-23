@@ -21,7 +21,7 @@ struct Output{
 Output main(Input input){
     Output output;
     
-    float4 albedo = u_texture.Sample(u_sampler, input.texcoord) *  material.color; 
+    float4 albedo = u_texture.Sample(u_sampler, input.texcoord) *  material.baseColor; 
     output.color = float4(albedo.rgb * input.diffuse + input.specular, albedo.a);
     
     return output;

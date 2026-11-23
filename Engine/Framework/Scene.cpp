@@ -2,7 +2,11 @@
 #include "Scene.h"
 #include "Actor.h"
 #include "Core/Factory.h"
-#include "Components/ColliderComponent.h"
+#include "Renderer/Renderer.h"
+#include "Renderer/Light.h"
+#include "Components/CameraComponent.h"
+#include "Components/LightComponent.h"
+#include "Engine.h"
 
 namespace nu
 {
@@ -13,9 +17,6 @@ namespace nu
 		{
 			actor->Update(dt);
 		}
-
-		// update collisions
-		//UpdateCollisions();
 
 		// remove destroyed actors
 		for (auto& actor : m_actors)
@@ -33,13 +34,40 @@ namespace nu
 		m_pendingActors.clear();
 	}
 
-	void Scene::Draw(const class Renderer& renderer)
+	void Scene::Draw(const Renderer& renderer)
 	{
-		for (const auto& actor : m_actors)
-		{
-			if (actor)
-				actor->Draw(renderer);
+		FrameUniform frameUniform{};
+
+		auto camera = GetActorByName("Camera");
+		if (camera) {
+			auto cameraComponent = camera->GetComponent<CameraComponent>();
+			if (cameraComponent) {
+				frameUniform.cameraPosition = camera->GetTransform().position;
+				frameUniform.view = cameraComponent->GetView();
+				frameUniform.projection = cameraComponent->GetProjection();
+				frameUniform.viewProjection = frameUniform.projection * frameUniform.view;
+
+				renderer.SetVertexUniform(UniformSlot::Frame, &frameUniform, sizeof(frameUniform));
+				renderer.SetFragmentUniform(UniformSlot::Frame, &frameUniform, sizeof(frameUniform));
+			}
 		}
+
+		LightUniform lightUniform{};
+		lightUniform.ambient = m_ambientLight;
+
+		auto lights = GetActorsByTag("Light");
+		for (auto light : lights){
+			if (!light->IsActive())continue;
+
+			auto lightComponent = light->GetComponent<LightComponent>();
+			if (lightComponent && lightComponent->IsActive())
+			{lightUniform.lights[lightUniform.count++] = lightComponent->GetLightData();}
+		}
+
+		renderer.SetVertexUniform(UniformSlot::Light, &lightUniform, sizeof(lightUniform));
+		renderer.SetFragmentUniform(UniformSlot::Light, &lightUniform, sizeof(lightUniform));
+
+		for (const auto& actor : m_actors){if (actor)actor->Draw(renderer);}
 	}
 
 	void Scene::AddActor(std::unique_ptr<Actor> actor)
@@ -98,38 +126,18 @@ namespace nu
 						AddActor(std::move(actor));
 					}
 				}
-
 			}
 		}
-		else
-		{
-			return false;
-		}
-
+		else{return false;}
 		return true;
 	}
 
-
-	void Scene::UpdateCollisions()
+	void Scene::UpdateGui()
 	{
-		for (auto& actorA : m_actors)
-		{
-			for (auto& actorB : m_actors)
-			{
-				if (actorA == actorB || actorA->m_destroyed || actorB->m_destroyed) continue;
+		glm::vec3 clearColor = Engine::Instance().GetRenderer().GetClearColor();
+		ImGui::ColorEdit3("Clear Color", glm::value_ptr(clearColor));
+		Engine::Instance().GetRenderer().SetClearColor(clearColor);
 
-				auto colliderA = actorA->GetComponent<ColliderComponent>();
-				auto colliderB = actorB->GetComponent<ColliderComponent>();
-
-				if (!colliderA || !colliderB) continue;
-
-				// check collision
-				if (colliderA->CheckCollision(*colliderB))
-				{
-					actorA->OnCollision(actorB.get());
-					actorB->OnCollision(actorA.get());
-				}
-			}
-		}
+		ImGui::ColorEdit3("Ambient Light", glm::value_ptr(m_ambientLight));
 	}
 }

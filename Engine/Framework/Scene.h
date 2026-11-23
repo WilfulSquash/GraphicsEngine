@@ -1,5 +1,6 @@
 #pragma once
 #include "Actor.h"
+#include "Editor/Editor.h"
 
 #include <vector>
 #include <string>
@@ -7,7 +8,7 @@
 
 namespace nu
 {
-	class Scene
+	class Scene : public IGUI
 	{
 	public:
 		void Update(float dt);
@@ -18,20 +19,26 @@ namespace nu
 
 		bool Load(const std::string& sceneName);
 
+		void UpdateGui() override;
+
 		template<typename T = Actor>
 		T* GetActorByName(const std::string& name);
 
+		template<typename T = Actor>
+		std::vector<T*> GetActorsByTag(const std::string& name);
+
+		const auto& GetActors() const { return m_actors; }
+
 		void SetGame(class Game* game) { m_game = game; }
 		class Game* GetGame() { return m_game; }
-
-	private:
-		void UpdateCollisions();
 
 	private:
 		std::vector<std::unique_ptr<Actor>> m_actors;
 		std::vector<std::unique_ptr<Actor>> m_pendingActors;
 
 		class Game* m_game{ nullptr };
+
+		glm::vec3 m_ambientLight{ 0.5f, 0.5f, 0.5f };
 	};
 
 	template<typename T>
@@ -47,5 +54,22 @@ namespace nu
 		}
 
 		return nullptr;
+	}
+
+	template<typename T>
+	inline std::vector<T*> Scene::GetActorsByTag(const std::string& tag)
+	{
+		std::vector<T*> result;
+
+		for (auto& actor : m_actors)
+		{
+			T* actorT = dynamic_cast<T*>(actor.get());
+			if (actorT && actorT->m_tag == tag)
+			{
+				result.push_back(actorT);
+			}
+		}
+
+		return result;
 	}
 }

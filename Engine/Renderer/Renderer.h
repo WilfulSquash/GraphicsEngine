@@ -1,6 +1,6 @@
 #pragma once
+#include "Uniforms.h"
 
-#include "Math/Vector2.h"
 #include <SDL3/SDL.h>
 #include <SDL3_ttf/SDL_ttf.h>
 
@@ -16,7 +16,9 @@ namespace nu
 		void Present() const;
 
 		bool BeginFrame();
-		bool EndFrame() const;
+		bool EndFrame();
+
+		void EndRenderPass();
 
 		void SetColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255) const;
 		void SetColor(float r, float g, float b, float a = 1.0f) const;
@@ -29,27 +31,31 @@ namespace nu
 		int GetWidth() const { return m_width; }
 		int GetHeight() const { return m_height; }
 
-		void SetCamera(const Vector2& camera) { m_camera = camera; }
-		void EnableCamera(bool enable = true) { m_cameraEnabled = enable; }
-
 		//SDL GPU
 
 		SDL_GPUDevice* GetGPUDevice() const { return m_gpuDevice; }
+
+		SDL_GPUCommandBuffer* GetGPUCommandBuffer() const { return m_gpuCommandBuffer; }
+		SDL_GPUTexture* GetGPUSwapchainTexture() const { return m_swapchainTexture; }
+
 		SDL_Window* GetWindow() const { return m_window; }
 
-		void SetPipeline(const class Pipeline& pipeline);
-		void SetVertexBuffer(const class VertexBuffer& vertexBuffer);
-		void SetIndexBuffer(const class IndexBuffer& indexBuffer);
+		void SetPipeline(const class Pipeline& pipeline) const;
+		void SetVertexBuffer(const class VertexBuffer& vertexBuffer) const;
+		void SetIndexBuffer(const class IndexBuffer& indexBuffer) const;
 
 		void Draw(uint32_t vertexCount);
-		void DrawIndex(const class IndexBuffer& indexBuffer);
+		void DrawIndex(const class IndexBuffer& indexBuffer) const;
 
-		void SetVertexUniform(uint32_t slot, const void* data, uint32_t size);
-		void SetFragmentUniform(uint32_t slot, const void* data, uint32_t size);
+		void SetVertexUniform(UniformSlot slot, const void* data, uint32_t size) const;
+		void SetFragmentUniform(UniformSlot slot, const void* data, uint32_t size) const;
 
 		void SetFragmentTexture(uint32_t slot, const class Texture& texture);
+		void SetMaterial(const class MaterialInstance& materialInstance) const;
 
 		void CreateDepthBuffer();
+		void SetClearColor(const glm::vec3& clearColor) { m_clearColor = clearColor; }
+		const glm::vec3& GetClearColor() const { return m_clearColor; }
 
 		friend class Texture;
 		friend class Shader;
@@ -60,15 +66,16 @@ namespace nu
 		SDL_Window* m_window = nullptr;
 		SDL_Renderer* m_renderer = nullptr;
 
+
 		SDL_GPUDevice* m_gpuDevice = nullptr;
 		SDL_GPUCommandBuffer* m_gpuCommandBuffer = nullptr;
 		SDL_GPURenderPass* m_gpuRenderPass = nullptr;
 		SDL_GPUTexture* m_depthTexture = nullptr;
-
-		bool m_cameraEnabled = true;
-		Vector2 m_camera;
+		SDL_GPUTexture* m_swapchainTexture = nullptr;
 
 		int m_width = 0;
 		int m_height = 0;
+
+		glm::vec3 m_clearColor{ 0.0f};
 	};
 }

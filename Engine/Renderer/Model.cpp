@@ -1,10 +1,15 @@
 #include "pch.h"
 #include "Model.h"
 #include "Renderer.h"
+#include "Resources/ResourceManager.h"
+#include "Renderer/Texture.h"
+#include "Core/File.h"
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+
+#define DEFAULT_MATERIAL "materials/phong.material.json"
 
 namespace nu
 {
@@ -13,9 +18,12 @@ namespace nu
 		Assimp::Importer importer;
 		const aiScene* scene = importer.ReadFile(filename,
 			aiProcess_Triangulate |
+			aiProcess_JoinIdenticalVertices |
 			aiProcess_GenSmoothNormals |
 			aiProcess_FlipUVs |
-			aiProcess_CalcTangentSpace);
+			aiProcess_CalcTangentSpace |
+			aiProcess_RemoveRedundantMaterials |
+			aiProcess_OptimizeMeshes);
 
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 		{
@@ -24,26 +32,48 @@ namespace nu
 			return false;
 		}
 
-		// todo: start processing the scene from the root node with ProcessNode(node, scene, renderer)
-		// the root node is scene->mRootNode
+		// texture paths in the model are relative to the model file
+		std::string directory = GetParentDirectory(filename) + "/";
+		LoadMaterials(scene, directory, renderer);
+
 		ProcessNode(scene->mRootNode, scene, renderer);
 
 		return true;
 	}
 
-	void Model::Draw(Renderer& renderer) const
+	void Model::Draw(const Renderer& renderer, const std::vector<res_t<MaterialInstance>>& overrides) const
 	{
 		for (const auto& mesh : m_meshes)
 		{
-			// todo: set the mesh vertex buffer on the renderer with renderer.SetVertexBuffer(vertexBuffer)
-			// the buffers are stored as unique_ptr, so dereference them with *
+			uint32_t slot = mesh.materialIndex;
+			const MaterialInstance& material = (slot < overrides.size() && overrides[slot]) ? 
+				*overrides[slot] : 
+				m_materials[slot];
+
+			renderer.SetMaterial(material);
+
 			renderer.SetVertexBuffer(*mesh.vertexBuffer);
-
-			// todo: set the mesh index buffer on the renderer with renderer.SetIndexBuffer(indexBuffer)
 			renderer.SetIndexBuffer(*mesh.indexBuffer);
-
-			// todo: draw the mesh with renderer.DrawIndex(indexBuffer)
 			renderer.DrawIndex(*mesh.indexBuffer);
+		}
+	}
+
+	void Model::UpdateGui()
+	{
+		Resource::UpdateGui();
+
+		ImGui::TextColored({ 0, 1, 0, 1 }, "Meshes");
+		ImGui::Separator();
+		for (size_t i = 0; i < m_meshes.size(); i++)
+		{
+			ImGui::Text("Mesh [%d]: Material [%d]", i, m_meshes[i].materialIndex);
+		}
+
+		ImGui::TextColored({ 0, 1, 0, 1 }, "Materials");
+		ImGui::Separator();
+		for (size_t i = 0; i < m_materials.size(); i++)
+		{
+			ImGui::Text("Material [%d]: %s", i, m_materials[i].GetName().c_str());
 		}
 	}
 
@@ -59,11 +89,8 @@ namespace nu
 			ProcessMesh(mesh, scene, renderer);
 		}
 
-		// process the current node children
 		for (unsigned int i = 0; i < node->mNumChildren; i++)
 		{
-			// todo: process the child node with ProcessNode(child, scene, renderer)
-			// the children are stored in node->mChildren, this is recursive so every node in the tree gets processed
 			ProcessNode(node->mChildren[i], scene, renderer);
 		}
 	}
@@ -78,21 +105,16 @@ namespace nu
 		{
 			Vertex vertex;
 
-			// todo: set vertex.position from mesh->mVertices[i] (x, y, z)
-			// a mesh always has positions, so no null check is needed
 			vertex.position = glm::vec3{
 				mesh->mVertices[i].x,
 				mesh->mVertices[i].y,
 				mesh->mVertices[i].z
 			};
 
-			// texcoords are optional, use (0, 0) if the mesh doesn't have them
 			vertex.texcoord = (mesh->mTextureCoords[0])
 				? glm::vec2{ mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y }
 			: glm::vec2{ 0, 0 };
 
-			// todo: set vertex.normal from mesh->mNormals[i] (x, y, z)
-			// normals are optional, use (0, 0, 0) if mesh->mNormals is null (see texcoord above)
 			vertex.normal = (mesh->mNormals)
 				? glm::vec3{
 					mesh->mNormals[i].x,
@@ -101,8 +123,6 @@ namespace nu
 			}
 			: glm::vec3{ 0, 0, 0 };
 
-			// todo: set vertex.tangent from mesh->mTangents[i] (x, y, z)
-			// tangents are optional, use (0, 0, 0) if mesh->mTangents is null (see texcoord above)
 			vertex.tangent = (mesh->mTangents)
 				? glm::vec3{
 					mesh->mTangents[i].x,
@@ -150,6 +170,70 @@ namespace nu
 
 		// todo: add newMesh to m_meshes
 		// Mesh holds unique_ptrs so it can't be copied, use std::move(newMesh)
+		newMesh.materialIndex = mesh->mMaterialIndex;
 		m_meshes.push_back(std::move(newMesh));
+	}
+
+	void Model::LoadMaterials(const aiScene* scene, const std::string& directory, const Renderer& renderer)
+	{
+		// every imported material starts from the standard phong material
+		auto material = Resources().Get<Material>(DEFAULT_MATERIAL, renderer);
+
+		std::cout << "Loading " << scene->mNumMaterials << " material(s)" << std::endl;
+
+		m_materials.reserve(scene->mNumMaterials);
+		for (unsigned int i = 0; i < scene->mNumMaterials; i++)
+		{
+			const aiMaterial* source = scene->mMaterials[i];
+			MaterialInstance& instance = m_materials.emplace_back(material);
+
+			// base color: gltf uses BASE_COLOR, older formats (obj, fbx) use DIFFUSE
+			aiColor4D color;
+			if (source->Get(AI_MATKEY_BASE_COLOR, color) == AI_SUCCESS ||
+				source->Get(AI_MATKEY_COLOR_DIFFUSE, color) == AI_SUCCESS)
+			{
+				instance.GetData().baseColor = glm::vec4{ color.r, color.g, color.b, color.a };
+			}
+
+			// shininess varies a lot between exporters, ignore zero
+			float shininess;
+			if (source->Get(AI_MATKEY_SHININESS, shininess) == AI_SUCCESS && shininess > 0.0f)
+			{
+				instance.GetData().shininess = shininess;
+			}
+
+			// base texture
+			aiString path;
+			if (source->GetTexture(aiTextureType_BASE_COLOR, 0, &path) == AI_SUCCESS ||
+				source->GetTexture(aiTextureType_DIFFUSE, 0, &path) == AI_SUCCESS)
+			{
+				// embedded textures (glb, some fbx) use paths like "*0" and aren't loaded from disk yet
+				if (path.C_Str()[0] == '*')
+				{
+					std::cerr << "Embedded textures not supported yet: " << path.C_Str() << std::endl;
+				}
+				else
+				{
+					auto texture = Resources().Get<Texture>(directory + path.C_Str(), renderer);
+					if (!instance.SetTexture("base_map", texture))
+					{
+						std::cerr << "Material has no base_map slot for texture: " << path.C_Str() << std::endl;
+					}
+				}
+			}
+
+			// print what was loaded for this slot
+			aiString name;
+			source->Get(AI_MATKEY_NAME, name);
+
+			instance.SetName(name.C_Str());
+
+			const MaterialData& data = instance.GetData();
+			std::cout << "  [" << i << "] " << name.C_Str()
+				<< " | color: " << data.baseColor.r << ", " << data.baseColor.g << ", " << data.baseColor.b << ", " << data.baseColor.a
+				<< " | shininess: " << data.shininess
+				<< " | texture: " << (path.length > 0 ? path.C_Str() : "none")
+				<< std::endl;
+		}
 	}
 }

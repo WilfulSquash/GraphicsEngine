@@ -94,7 +94,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\sdl3\include;$(SolutionDir)ThirdParty\fmod\core\inc;$(SolutionDir)ThirdParty\rapidjson\include;$(SolutionDir)Engine;$(SolutionDir)ThirdParty\glm;$(SolutionDir)ThirdParty\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\sdl3\include;$(SolutionDir)ThirdParty\fmod\core\inc;$(SolutionDir)ThirdParty\rapidjson\include;$(SolutionDir)Engine;$(SolutionDir)ThirdParty\glm;$(SolutionDir)ThirdParty\assimp\include;$(SolutionDir)ThirdParty\imgui;$(SolutionDir)ThirdParty\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -117,7 +117,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\sdl3\include;$(SolutionDir)ThirdParty\fmod\core\inc;$(SolutionDir)ThirdParty\rapidjson\include;$(SolutionDir)Engine;$(SolutionDir)ThirdParty\glm;$(SolutionDir)ThirdParty\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\sdl3\include;$(SolutionDir)ThirdParty\fmod\core\inc;$(SolutionDir)ThirdParty\rapidjson\include;$(SolutionDir)Engine;$(SolutionDir)ThirdParty\glm;$(SolutionDir)ThirdParty\assimp\include;$(SolutionDir)ThirdParty\imgui;$(SolutionDir)ThirdParty\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -138,7 +138,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\sdl3\include;$(SolutionDir)ThirdParty\fmod\core\inc;$(SolutionDir)ThirdParty\rapidjson\include;$(SolutionDir)Engine;$(SolutionDir)ThirdParty\glm;$(SolutionDir)ThirdParty\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\sdl3\include;$(SolutionDir)ThirdParty\fmod\core\inc;$(SolutionDir)ThirdParty\rapidjson\include;$(SolutionDir)Engine;$(SolutionDir)ThirdParty\glm;$(SolutionDir)ThirdParty\assimp\include;$(SolutionDir)ThirdParty\imgui;$(SolutionDir)ThirdParty\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -161,7 +161,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\sdl3\include;$(SolutionDir)ThirdParty\fmod\core\inc;$(SolutionDir)ThirdParty\rapidjson\include;$(SolutionDir)Engine;$(SolutionDir)ThirdParty\glm;$(SolutionDir)ThirdParty\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)ThirdParty\sdl3\include;$(SolutionDir)ThirdParty\fmod\core\inc;$(SolutionDir)ThirdParty\rapidjson\include;$(SolutionDir)Engine;$(SolutionDir)ThirdParty\glm;$(SolutionDir)ThirdParty\assimp\include;$(SolutionDir)ThirdParty\imgui;$(SolutionDir)ThirdParty\imgui\backends;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -175,6 +175,15 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\ThirdParty\imgui\backends\imgui_impl_sdl3.h" />
+    <ClInclude Include="..\ThirdParty\imgui\backends\imgui_impl_sdlgpu3.h" />
+    <ClInclude Include="..\ThirdParty\imgui\backends\imgui_impl_sdlgpu3_shaders.h" />
+    <ClInclude Include="..\ThirdParty\imgui\imconfig.h" />
+    <ClInclude Include="..\ThirdParty\imgui\imgui.h" />
+    <ClInclude Include="..\ThirdParty\imgui\imgui_internal.h" />
+    <ClInclude Include="..\ThirdParty\imgui\imstb_rectpack.h" />
+    <ClInclude Include="..\ThirdParty\imgui\imstb_textedit.h" />
+    <ClInclude Include="..\ThirdParty\imgui\imstb_truetype.h" />
     <ClInclude Include="Audio\Audio.h" />
     <ClInclude Include="Components\CameraComponent.h" />
     <ClInclude Include="Components\CameraControllerComponent.h" />
@@ -191,6 +200,7 @@
     <ClInclude Include="Core\Random.h" />
     <ClInclude Include="Core\Singleton.h" />
     <ClInclude Include="Core\StringUtils.h" />
+    <ClInclude Include="Editor\Editor.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Framework\Actor.h" />
     <ClInclude Include="Framework\Game.h" />
@@ -205,18 +215,64 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Renderer\Font.h" />
     <ClInclude Include="Renderer\IndexBuffer.h" />
+    <ClInclude Include="Renderer\Light.h" />
+    <ClInclude Include="Renderer\Material.h" />
+    <ClInclude Include="Renderer\MaterialInstance.h" />
     <ClInclude Include="Renderer\Mesh.h" />
     <ClInclude Include="Renderer\Model.h" />
     <ClInclude Include="Renderer\Pipeline.h" />
     <ClInclude Include="Renderer\Renderer.h" />
     <ClInclude Include="Renderer\Shader.h" />
     <ClInclude Include="Renderer\Texture.h" />
+    <ClInclude Include="Renderer\Uniforms.h" />
     <ClInclude Include="Renderer\VertexBuffer.h" />
     <ClInclude Include="Resources\Resource.h" />
     <ClInclude Include="Resources\ResourceManager.h" />
     <ClInclude Include="Serialization\Json.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\ThirdParty\imgui\backends\imgui_impl_sdl3.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\backends\imgui_impl_sdlgpu3.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui_demo.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui_draw.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui_tables.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\ThirdParty\imgui\imgui_widgets.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Audio\Audio.cpp" />
     <ClCompile Include="Components\CameraComponent.cpp" />
     <ClCompile Include="Components\CameraControllerComponent.cpp" />
@@ -226,6 +282,7 @@
     <ClCompile Include="Components\PhysicsComponent.cpp" />
     <ClCompile Include="Core\File.cpp" />
     <ClCompile Include="Core\GameTime.cpp" />
+    <ClCompile Include="Editor\Editor.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Framework\Actor.cpp" />
     <ClCompile Include="Framework\Game.cpp" />
@@ -239,6 +296,8 @@
     </ClCompile>
     <ClCompile Include="Renderer\Font.cpp" />
     <ClCompile Include="Renderer\IndexBuffer.cpp" />
+    <ClCompile Include="Renderer\Material.cpp" />
+    <ClCompile Include="Renderer\MaterialInstance.cpp" />
     <ClCompile Include="Renderer\Mesh.cpp" />
     <ClCompile Include="Renderer\Model.cpp" />
     <ClCompile Include="Renderer\Pipeline.cpp" />
@@ -249,9 +308,33 @@
     <ClCompile Include="Serialization\Json.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\Build\Assets\textures\brick_diffuse.png" />
+    <Image Include="..\Build\Assets\textures\brick_normal.png" />
+    <Image Include="..\Build\Assets\textures\brick_specular.png" />
+    <Image Include="..\Build\Assets\textures\default.png" />
+    <Image Include="..\Build\Assets\textures\lava_diffuse.png" />
+    <Image Include="..\Build\Assets\textures\lava_emissive.png" />
+    <Image Include="..\Build\Assets\textures\lava_normal.png" />
+    <Image Include="..\Build\Assets\textures\ogre_diffuse.bmp" />
+    <Image Include="..\Build\Assets\textures\ogre_normal.bmp" />
+    <Image Include="..\Build\Assets\textures\rocks_diffuse.jpg" />
+    <Image Include="..\Build\Assets\textures\rocks_normal.jpg" />
+    <Image Include="..\Build\Assets\textures\space_crate_diffuse.png" />
+    <Image Include="..\Build\Assets\textures\space_crate_emissive.png" />
+    <Image Include="..\Build\Assets\textures\space_crate_normal.png" />
     <Image Include="..\Build\Assets\textures\spot_diffuse.png" />
+    <Image Include="..\Build\Assets\textures\squirrel_diffuse.png" />
+    <Image Include="..\Build\Assets\textures\squirrel_normal.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Build\Assets\materials\dragon.instance.json" />
+    <None Include="..\Build\Assets\materials\ground.instance.json" />
+    <None Include="..\Build\Assets\materials\lava.instance.json" />
+    <None Include="..\Build\Assets\materials\multi.material.json" />
+    <None Include="..\Build\Assets\materials\ogre.instance.json" />
+    <None Include="..\Build\Assets\materials\phong.material.json" />
+    <None Include="..\Build\Assets\materials\plane.instance.json" />
+    <None Include="..\Build\Assets\materials\sphere.instance.json" />
     <None Include="..\Build\Assets\scenes\scene.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

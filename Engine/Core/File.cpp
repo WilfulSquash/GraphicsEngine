@@ -15,6 +15,11 @@ namespace nu
 		return ec ? std::string{} : path.string();
 	}
 
+	std::string GetParentDirectory(const std::string& path)
+	{
+		return std::filesystem::path(path).parent_path().string();
+	}
+
 	bool SetWorkingDirectory(const std::string& path)
 	{
 		std::error_code ec;
