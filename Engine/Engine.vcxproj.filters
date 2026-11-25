@@ -49,6 +49,9 @@
     <Filter Include="Editor\imgui">
       <UniqueIdentifier>{a49bf35c-4afb-4d1f-939a-1cb57c3af87a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\textures\skybox">
+      <UniqueIdentifier>{c2463c70-75c4-443f-813d-6e7b84151ff3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Components\RendererComponent.h">
@@ -365,6 +368,24 @@
     <Image Include="..\Build\Assets\textures\squirrel_normal.png">
       <Filter>Assets\textures</Filter>
     </Image>
+    <Image Include="..\Build\Assets\textures\skybox\negx.jpg">
+      <Filter>Assets\textures\skybox</Filter>
+    </Image>
+    <Image Include="..\Build\Assets\textures\skybox\negy.jpg">
+      <Filter>Assets\textures\skybox</Filter>
+    </Image>
+    <Image Include="..\Build\Assets\textures\skybox\negz.jpg">
+      <Filter>Assets\textures\skybox</Filter>
+    </Image>
+    <Image Include="..\Build\Assets\textures\skybox\posx.jpg">
+      <Filter>Assets\textures\skybox</Filter>
+    </Image>
+    <Image Include="..\Build\Assets\textures\skybox\posy.jpg">
+      <Filter>Assets\textures\skybox</Filter>
+    </Image>
+    <Image Include="..\Build\Assets\textures\skybox\posz.jpg">
+      <Filter>Assets\textures\skybox</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Build\Assets\scenes\scene.json">
@@ -393,6 +414,27 @@
     </None>
     <None Include="..\Build\Assets\materials\lava.instance.json">
       <Filter>Assets\materials</Filter>
+    </None>
+    <None Include="..\Build\Assets\textures\skybox\skybox.cubemap.json">
+      <Filter>Assets\textures\skybox</Filter>
+    </None>
+    <None Include="..\Build\Assets\materials\phong-normal.material.json">
+      <Filter>Assets\materials</Filter>
+    </None>
+    <None Include="..\Build\Assets\scenes\scene-helmet.json">
+      <Filter>Assets\scenes</Filter>
+    </None>
+    <None Include="..\Build\Assets\materials\phong-default.material.json">
+      <Filter>Assets\materials</Filter>
+    </None>
+    <None Include="..\Build\Assets\materials\skybox.instance.json">
+      <Filter>Assets\materials</Filter>
+    </None>
+    <None Include="..\Build\Assets\materials\skybox.material.json">
+      <Filter>Assets\materials</Filter>
+    </None>
+    <None Include="..\Build\Assets\scenes\scene-skybox.json">
+      <Filter>Assets\scenes</Filter>
     </None>
   </ItemGroup>
 </Project>

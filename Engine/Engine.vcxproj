@@ -319,6 +319,12 @@
     <Image Include="..\Build\Assets\textures\ogre_normal.bmp" />
     <Image Include="..\Build\Assets\textures\rocks_diffuse.jpg" />
     <Image Include="..\Build\Assets\textures\rocks_normal.jpg" />
+    <Image Include="..\Build\Assets\textures\skybox\negx.jpg" />
+    <Image Include="..\Build\Assets\textures\skybox\negy.jpg" />
+    <Image Include="..\Build\Assets\textures\skybox\negz.jpg" />
+    <Image Include="..\Build\Assets\textures\skybox\posx.jpg" />
+    <Image Include="..\Build\Assets\textures\skybox\posy.jpg" />
+    <Image Include="..\Build\Assets\textures\skybox\posz.jpg" />
     <Image Include="..\Build\Assets\textures\space_crate_diffuse.png" />
     <Image Include="..\Build\Assets\textures\space_crate_emissive.png" />
     <Image Include="..\Build\Assets\textures\space_crate_normal.png" />
@@ -332,10 +338,17 @@
     <None Include="..\Build\Assets\materials\lava.instance.json" />
     <None Include="..\Build\Assets\materials\multi.material.json" />
     <None Include="..\Build\Assets\materials\ogre.instance.json" />
+    <None Include="..\Build\Assets\materials\phong-default.material.json" />
+    <None Include="..\Build\Assets\materials\phong-normal.material.json" />
     <None Include="..\Build\Assets\materials\phong.material.json" />
     <None Include="..\Build\Assets\materials\plane.instance.json" />
+    <None Include="..\Build\Assets\materials\skybox.instance.json" />
+    <None Include="..\Build\Assets\materials\skybox.material.json" />
     <None Include="..\Build\Assets\materials\sphere.instance.json" />
+    <None Include="..\Build\Assets\scenes\scene-helmet.json" />
+    <None Include="..\Build\Assets\scenes\scene-skybox.json" />
     <None Include="..\Build\Assets\scenes\scene.json" />
+    <None Include="..\Build\Assets\textures\skybox\skybox.cubemap.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

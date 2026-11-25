@@ -11,7 +11,7 @@ struct Material{
     float3 specularColor;
     float shininess;
     float3 emissiveColor;
-    float padding;
+    float normalStrength;
     float2 tiling;
     float2 offset;
 };

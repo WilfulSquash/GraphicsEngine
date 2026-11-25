@@ -86,14 +86,14 @@ namespace nu
 		// empty slots fall back to a default texture so the shader can always sample
 		std::vector<SDL_GPUTextureSamplerBinding> bindings;
 		bindings.reserve(m_textures.size());
-		for (const auto& texture : m_textures)
-		{
-			const Texture& source = texture ? *texture : *m_material->GetDefaultTexture();
+
+		for (size_t slot = 0; slot < m_textures.size(); slot++) {
+			const auto& texture = m_textures[slot];
+			const Texture& source = texture ? *texture : *m_material->GetDefaultTexture(slot);
 			bindings.push_back({ source.GetGPUTexture(), source.GetGPUSampler() });
 		}
 
-		if (!bindings.empty())
-		{
+		if (!bindings.empty()){
 			SDL_BindGPUFragmentSamplers(renderPass, 0, bindings.data(), (uint32_t)bindings.size());
 		}
 
@@ -121,6 +121,7 @@ namespace nu
 		ImGui::ColorEdit3("Specular Color", glm::value_ptr(m_data.specularColor));
 		ImGui::SliderFloat("Shininess", &m_data.shininess, 2, 256);
 		ImGui::ColorEdit3("Emissive Color", glm::value_ptr(m_data.emissiveColor));
+		ImGui::SliderFloat("Normal Strength", &m_data.normalStrength, 0, 10);
 		ImGui::DragFloat2("Tiling", glm::value_ptr(m_data.tiling), 0.1f);
 		ImGui::DragFloat2("Offset", glm::value_ptr(m_data.offset), 0.1f);
 

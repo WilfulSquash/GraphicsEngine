@@ -5,6 +5,6 @@
 	"textures": {
 		"base1_map": "textures/rock.png",
 		"base2_map": "textures/grass.png",
-		"base3_map": "textures/lava.png"
+		"base3_map": "textures/lava_diffuse.png"
 	}
 }

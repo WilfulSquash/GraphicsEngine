@@ -1,0 +1,13 @@
+{
+  "actors": [
+    {
+      "name": "Helmet",
+      "type": "Actor",
+      "active": true,
+      "transform": {
+        "position": [ 2, -1, 0 ],
+        "scale": [ 2.0, 2.0, 2.0 ]
+      }
+    }
+  ]
+}

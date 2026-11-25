@@ -53,7 +53,7 @@ namespace nu
 			},
 
 			.depth_stencil_state = SDL_GPUDepthStencilState{
-				.compare_op = SDL_GPU_COMPAREOP_LESS,
+				.compare_op = SDL_GPU_COMPAREOP_LESS_OR_EQUAL,
 				.enable_depth_test = true,
 				.enable_depth_write = true
 			},

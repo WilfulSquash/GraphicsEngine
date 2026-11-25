@@ -9,7 +9,7 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-#define DEFAULT_MATERIAL "materials/phong.material.json"
+#define DEFAULT_MATERIAL "materials/phong-default.material.json"
 
 namespace nu
 {
@@ -218,6 +218,44 @@ namespace nu
 					if (!instance.SetTexture("base_map", texture))
 					{
 						std::cerr << "Material has no base_map slot for texture: " << path.C_Str() << std::endl;
+					}
+				}
+			}
+
+			//Normal Texture
+			if (source->GetTexture(aiTextureType_NORMAL_CAMERA, 0, &path) == AI_SUCCESS ||
+				source->GetTexture(aiTextureType_NORMALS, 0, &path) == AI_SUCCESS)
+			{
+				// embedded textures (glb, some fbx) use paths like "*0" and aren't loaded from disk yet
+				if (path.C_Str()[0] == '*')
+				{
+					std::cerr << "Embedded textures not supported yet: " << path.C_Str() << std::endl;
+				}
+				else
+				{
+					auto texture = Resources().Get<Texture>(directory + path.C_Str(), renderer);
+					if (!instance.SetTexture("normal_map", texture))
+					{
+						std::cerr << "Material has no normal_map slot for texture: " << path.C_Str() << std::endl;
+					}
+				}
+			}
+
+			//Emissive Texture
+			if (source->GetTexture(aiTextureType_EMISSION_COLOR, 0, &path) == AI_SUCCESS ||
+				source->GetTexture(aiTextureType_EMISSIVE, 0, &path) == AI_SUCCESS)
+			{
+				// embedded textures (glb, some fbx) use paths like "*0" and aren't loaded from disk yet
+				if (path.C_Str()[0] == '*')
+				{
+					std::cerr << "Embedded textures not supported yet: " << path.C_Str() << std::endl;
+				}
+				else
+				{
+					auto texture = Resources().Get<Texture>(directory + path.C_Str(), renderer);
+					if (!instance.SetTexture("emsissive_map", texture))
+					{
+						std::cerr << "Material has no emissive_map slot for texture: " << path.C_Str() << std::endl;
 					}
 				}
 			}
