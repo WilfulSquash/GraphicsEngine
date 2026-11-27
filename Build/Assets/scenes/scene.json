@@ -88,7 +88,7 @@
         {
           "type": "ModelComponent",
           "model": "models/sphere.obj",
-          "materials": [ "materials/sphere.instance.json" ]
+          "materials": [ "materials/lava.instance.json" ]
         }
       ]
     },
@@ -152,22 +152,6 @@
           "type": "ModelComponent",
           "model": "models/plane.obj",
           "materials": [ "materials/ground.instance.json" ]
-        }
-      ]
-    },
-    {
-      "name": "Cube",
-      "type": "Actor",
-      "tag": "Cube",
-      "active": true,
-      "transform": {
-        "position": [ 2, 0, 0 ]
-      },
-      "components": [
-        {
-          "type": "ModelComponent",
-          "model": "models/cube.obj",
-          "materials": [ "materials/lava.instance.json" ]
         }
       ]
     }

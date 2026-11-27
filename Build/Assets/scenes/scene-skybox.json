@@ -88,7 +88,7 @@
         {
           "type": "ModelComponent",
           "model": "models/sphere.obj",
-          "materials": [ "materials/sphere.instance.json" ]
+          "materials": [ "materials/lava.instance.json" ]
         }
       ]
     },
@@ -151,7 +151,7 @@
         {
           "type": "ModelComponent",
           "model": "models/plane.obj",
-          "materials": [ "materials/ground.instance.json" ]
+          "materials": [ "materials/lava.instance.json" ]
         }
       ]
     },
